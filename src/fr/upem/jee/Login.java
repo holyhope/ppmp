@@ -21,6 +21,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @WebServlet("/Login")
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	protected static final int BAD_USER = 0;
+	protected static final int BAD_PASSWORD = 1;
+	protected static final int ALREADY_CONNECTED = 2;
+	protected static final int CONNECTED = 3;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -75,24 +79,32 @@ public class Login extends HttpServlet {
 
 	private void getConnected(HttpServletResponse response) throws IOException {
 		// TODO
+		System.out.println("connected");
 	}
 
 	private void getAlreadyConnected(HttpServletResponse response) throws IOException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		PrintWriter writerPage = response.getWriter();
 		objectMapper.writer().writeValue(writerPage, new Object() {
-			public final int	code	= 1;
-			public final String	message	= "Already connected";
+			public final int code = ALREADY_CONNECTED;
+			public final String message = "Already connected";
 		});
 		System.out.println("already authenticate");
 	}
 
 	private void getBadUser(HttpServletResponse response) throws IOException {
-		// TODO
+		ObjectMapper objectMapper = new ObjectMapper();
+		PrintWriter writerPage = response.getWriter();
+		objectMapper.writer().writeValue(writerPage, new Object() {
+			public final int code = BAD_USER;
+			public final String message = "Unknown user";
+		});
+		System.out.println("bad user");
 	}
 
 	private void getBadPassword(HttpServletResponse response) throws IOException {
 		// TODO
+		System.out.println("bad password");
 	}
 
 	private boolean authenticate(String email, byte[] hash) {
