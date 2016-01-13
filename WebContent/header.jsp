@@ -13,12 +13,12 @@
 <link rel="stylesheet" type="text/css"
 	href="//bootswatch.com/flatly/bootstrap.min.css" />
 <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
-<script src="script/login.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
 	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
 	crossorigin="anonymous"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script src="script/lang.js"></script>
 <title><fmt:message key="window_title" /> -
 	${param.window_title}</title>
 </head>

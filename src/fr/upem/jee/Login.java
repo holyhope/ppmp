@@ -77,7 +77,12 @@ public class Login extends HttpServlet {
 	}
 
 	private void getConnected(HttpServletResponse response) throws IOException {
-		// TODO
+		ObjectMapper objectMapper = new ObjectMapper();
+		PrintWriter writerPage = response.getWriter();
+		objectMapper.writer().writeValue(writerPage, new Object() {
+			public final int code = CONNECTED;
+			public final String message = "Connected";
+		});
 		System.out.println("connected");
 	}
 
@@ -102,7 +107,12 @@ public class Login extends HttpServlet {
 	}
 
 	private void getBadPassword(HttpServletResponse response) throws IOException {
-		// TODO
+		ObjectMapper objectMapper = new ObjectMapper();
+		PrintWriter writerPage = response.getWriter();
+		objectMapper.writer().writeValue(writerPage, new Object() {
+			public final int code = BAD_PASSWORD;
+			public final String message = "Bad password";
+		});
 		System.out.println("bad password");
 	}
 

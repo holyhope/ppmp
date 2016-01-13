@@ -7,6 +7,18 @@
 	<jsp:param name="window_title" value="${window_title}" />
 </jsp:include>
 
+<jsp:include page="notification.jsp" />
+<script src="script/login.js"></script>
+<script>
+<!--
+	addTranslation('login', 'notifications', {
+		invalidUser : {
+			title : "<fmt:message key="notification.invalid_user.title" />",
+			content : "<fmt:message key="notification.invalid_user.content" />"
+		}
+	});
+	-->
+</script>
 <form method="post" action="Authenticate">
 	<div class="form-group">
 		<label for="email"><fmt:message key="email" /></label> <input
