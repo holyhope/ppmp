@@ -10,14 +10,20 @@
 <jsp:include page="notification.jsp" />
 <script src="script/login.js"></script>
 <script>
-<!--
+
 	addTranslation('login', 'notifications', {
 		invalidUser : {
 			title : "<fmt:message key="notification.invalid_user.title" />",
 			content : "<fmt:message key="notification.invalid_user.content" />"
 		}
 	});
-	-->
+	addTranslation('login', 'notifications', {
+		badPassword : {
+			title : "<fmt:message key="notification.bad_password.title" />",
+			content : "<fmt:message key="notification.bad_password.content" />"
+		}
+	});
+	
 </script>
 <form method="post" action="Authenticate">
 	<div class="form-group">

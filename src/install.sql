@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS users(
     first_name VARCHAR(255) NULL,
     birthdate DATE NULL,
     email VARCHAR(255) NOT NULL,
+    hash_password VARCHAR(255) NOT NULL,
     photo_path VARCHAR(255) NULL
    )ENGINE=InnoDB CHARACTER SET=utf8;
 
@@ -107,3 +108,6 @@ CREATE TABLE IF NOT EXISTS experiences(
 	FOREIGN KEY (id_users) REFERENCES users(id),
 	FOREIGN KEY (id_company) REFERENCES company(id)
 )ENGINE=InnoDB CHARACTER SET=utf8;
+
+INSERT INTO users (last_name, first_name, birthdate, email, hash_password)
+VALUES ("Admin","Super","2016-01-20","admin@admin.com","21232f297a57a5a743894a0e4a801fc3");
