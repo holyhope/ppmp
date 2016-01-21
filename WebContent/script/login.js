@@ -13,21 +13,26 @@ jQuery(document)
 					data : $form.serialize(),
 					dataType : 'json'
 				}).always(function(response) {
-					var translations = getTranslation(
-							'login',
-							'notifications',
-							{});
-					if (response.code == 0) {
-						notifyUser(
-								translations.invalidUser.title,
-								translations.invalidUser.content,
-								"danger");
+					if(response.code == 3){
+						location.href = "./Profile.jsp";
 					}
-					else if(response.code == 1){
-						notifyUser(
-							translations.badPassword.title,
-							translations.badPassword.content,
-							"danger");
+					else{
+						var translations = getTranslation(
+								'login',
+								'notifications',
+								{});
+						if (response.code == 0) {
+							notifyUser(
+									translations.invalidUser.title,
+									translations.invalidUser.content,
+									"danger");
+						}
+						else if(response.code == 1){
+							notifyUser(
+								translations.badPassword.title,
+								translations.badPassword.content,
+								"danger");
+						}
 					}
 					});
 				});

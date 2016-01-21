@@ -10,7 +10,8 @@
 <jsp:include page="notification.jsp" />
 <script src="script/login.js"></script>
 <script>
-
+jQuery(document)
+.ready(function($) {
 	addTranslation('login', 'notifications', {
 		invalidUser : {
 			title : "<fmt:message key="notification.invalid_user.title" />",
@@ -23,6 +24,8 @@
 			content : "<fmt:message key="notification.bad_password.content" />"
 		}
 	});
+});
+
 	
 </script>
 <form method="post" action="Authenticate">

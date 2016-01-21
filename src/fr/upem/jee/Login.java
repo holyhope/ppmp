@@ -45,13 +45,7 @@ public class Login extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		File pagePath = new File(this.getServletContext().getRealPath("/Profile.jsp"));
-		 if ( pagePath.exists() ) {
-		        request.getRequestDispatcher("/Profile.jsp").forward(request, response);
-		    } else {
-		        throw new IllegalArgumentException(String.format( "The page %s does not exist", "/Profile.jsp"));
-		    }
-		return;
+		response.sendError(403, "Don't use GET method");
 	}
 
 	/**
@@ -91,9 +85,9 @@ public class Login extends HttpServlet {
 		}
 
 		session.setAttribute("connected", true);
-		//getConnected(response);
+		getConnected(response);
 		
-		doGet(request, response);
+		//doGet(request, response);
 		return;
 	}
 
