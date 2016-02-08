@@ -16,6 +16,7 @@ import fr.onlineCV.tools.PasswordConvert;
 public class LoginBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
+	public static final String USER = "user";
     private User user;
 
     @EJB
