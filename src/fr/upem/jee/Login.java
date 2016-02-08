@@ -194,8 +194,6 @@ public class Login extends HttpServlet {
 			set.close();
 			st.close();
 			myConn.close();
-
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
