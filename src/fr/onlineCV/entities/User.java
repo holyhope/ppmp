@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,25 +24,54 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	/**
+	 * Last name of the user.
+	 */
 	@NotNull(message = "{lastName.notNull}")
 	private String last_name;
+
+	/**
+	 * First name of the user.
+	 */
 	@NotNull(message = "{firstName.notNull}")
 	private String first_name;
+
+	/**
+	 * Email address of the user.
+	 */
 	@Pattern(regexp = "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)", message = "{email.pattern}")
 	@NotNull(message = "{email.notNull}")
 	private String email;
+
+	/**
+	 * Hashed password of the user.
+	 */
 	@NotNull(message = "{password.notNull}")
 	@Size(min = 5, message = "{password.minSize}")
 	@Convert(converter = PasswordConvert.class)
 	// @Converter( name = "passwordConverter", converterClass =
 	// PasswordConvert.class )
 	private String hash_password;
+
+	/**
+	 * Birth date of the user.
+	 */
 	@NotNull(message = "{birthday.notNull}")
 	// @Pattern(regexp =
 	// "(0[1-9]|1[0-9]|2[0-9]|3[01])\\/(0[1-9]|1[012])\\/[0-9]{4}", message =
 	// "{birthday.pattern}")
 	private java.util.Date birthdate;
+
+	/**
+	 * Path of the picture of the user localized in pictures directory.
+	 */
 	private String photo_path;
+
+	/**
+	 * Hobbies collection of the user.
+	 */
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	private Collection<Hobby> hobbies;
 
 	public Collection<Hobby> getHobbies() {
 		return hobbies;
@@ -50,9 +80,6 @@ public class User {
 	public void setHobbies(Collection<Hobby> hobbies) {
 		this.hobbies = hobbies;
 	}
-
-	@OneToMany
-	private Collection<Hobby> hobbies;
 
 	public Long getId() {
 		return id;
