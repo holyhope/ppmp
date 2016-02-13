@@ -27,17 +27,19 @@ public class LoginBean implements Serializable {
 	}
 
 	// Method called when button of register form clicked
-	public void login() {
+	public String login() {
 		User userEmail = userDao.find(user.getEmail());
 
 		if (userEmail.getHash_password().equals(PasswordConvert.hashPassword(user.getHash_password()))) {
 			FacesMessage message = new FacesMessage("Succès de la connexion !");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 			SessionBean.createSession().setAttribute(USER, userEmail);
+			return "Profile?faces-redirect=true";
 		} else {
 			FacesMessage message = new FacesMessage("userEmail = " + userEmail.getHash_password() + " user = "
 					+ PasswordConvert.hashPassword(user.getHash_password()));
 			FacesContext.getCurrentInstance().addMessage(null, message);
+			return "inscription";
 		}
 	}
 
