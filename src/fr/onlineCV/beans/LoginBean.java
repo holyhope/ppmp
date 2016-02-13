@@ -1,18 +1,20 @@
 package fr.onlineCV.beans;
 
 import java.io.Serializable;
+
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import fr.onlineCV.dao.UsersDAO;
 import fr.onlineCV.entities.User;
 import fr.onlineCV.tools.PasswordConvert;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class LoginBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -34,6 +36,7 @@ public class LoginBean implements Serializable {
 			FacesMessage message = new FacesMessage("Succès de la connexion !");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 			SessionBean.createSession().setAttribute(USER, userEmail);
+			user = userEmail;
 			return "Profile?faces-redirect=true";
 		} else {
 			FacesMessage message = new FacesMessage("userEmail = " + userEmail.getHash_password() + " user = "
@@ -42,6 +45,13 @@ public class LoginBean implements Serializable {
 			return "inscription";
 		}
 	}
+	
+	//logout event, invalidate session
+    public String logout() {
+        HttpSession session = SessionBean.getSession();
+        session.invalidate();
+        return "inscription?faces-redirect=true";
+    }
 
 	public User getUser() {
 		return user;
