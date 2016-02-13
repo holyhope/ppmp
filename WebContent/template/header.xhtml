@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition>
+	<b:navBar brand="OnlineCV" brandHref="#" inverse="true" fixed="top">
+		<b:navbarLinks>
+			<b:navLink value="Link" href="#"></b:navLink>
+			<b:navLink value="Link" href="#"></b:navLink>
+			<b:dropMenu value="Dropdown">
+				<b:navLink value="Action" href="#"></b:navLink>
+				<b:navLink value="Another action" href="#"></b:navLink>
+				<b:navLink value="Something else here" href="#"></b:navLink>
+				<b:navLink></b:navLink>
+				<b:navLink header="Nav header"></b:navLink>
+				<b:navLink value="Separated link" href="#"></b:navLink>
+				<b:navLink value="One more separated link" href="#"></b:navLink>
+			</b:dropMenu>
+		</b:navbarLinks>
+		<h:form styleClass="navbar-form navbar-right">
+			<div class="form-group">
+				<b:inputText placeholder="Email" fieldSize="sm"
+					value="#{loginBean.user.email}" />
+			</div>
+			<div class="form-group">
+				<b:inputSecret placeholder="Password" fieldSize="sm"
+					value="#{loginBean.user.hash_password}" />
+			</div> 
+                #{' '}
+                <b:commandButton action="#{loginBean.login}"
+				value="Sign in" look="success" icon="chevron-right"
+				iconAlign="right" />
+		</h:form>
+	</b:navBar>
+	</ui:composition>
+</html>

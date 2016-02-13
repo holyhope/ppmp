@@ -6,6 +6,8 @@
     <persistence-unit name="bdd_OnlineCV_PU" transaction-type="JTA">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <class>fr.onlineCV.entities.User</class>
+        <class>fr.onlineCV.entities.Hobby</class>
+        <class>fr.onlineCV.entities.School</class>
         <properties>
                 <property name="eclipselink.target-database" 
                     value="MySQL4"/>

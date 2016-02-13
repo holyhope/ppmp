@@ -12,41 +12,9 @@
 		var="registerMsg" />
 </h:head>
 
-<h:body style="padding-top: 50px; padding-bottom: 20px;">
-
-	<div id="header"></div>
-	<b:navBar brand="OnlineCV" brandHref="#" inverse="true" fixed="top">
-		<b:navbarLinks>
-			<b:navLink value="Link" href="#"></b:navLink>
-			<b:navLink value="Link" href="#"></b:navLink>
-			<b:dropMenu value="Dropdown">
-				<b:navLink value="Action" href="#"></b:navLink>
-				<b:navLink value="Another action" href="#"></b:navLink>
-				<b:navLink value="Something else here" href="#"></b:navLink>
-				<b:navLink></b:navLink>
-				<b:navLink header="Nav header"></b:navLink>
-				<b:navLink value="Separated link" href="#"></b:navLink>
-				<b:navLink value="One more separated link" href="#"></b:navLink>
-			</b:dropMenu>
-		</b:navbarLinks>
-		<h:form styleClass="navbar-form navbar-right">
-			<div class="form-group">
-				<b:inputText placeholder="Email" fieldSize="sm"
-					value="#{loginBean.user.email}" />
-				<!--input type="text" class="form-control" placeholder="Search"/-->
-			</div>
-			<div class="form-group">
-				<b:inputText placeholder="Password" fieldSize="sm"
-					value="#{loginBean.user.hash_password}" />
-			</div> 
-                #{' '}
-                <b:commandButton action="#{loginBean.login}"
-				value="Sign in" look="success" icon="chevron-right"
-				iconAlign="right" />
-		</h:form>
-	</b:navBar>
-	<div id="content">
-
+<h:body>
+<ui:composition template="template/template.xhtml">
+	 <ui:define name="content">
 		<h:form prependId="false">
 			<b:container layout="fluid">
 				<h2 class="form-signin-heading">Please sign up</h2>
@@ -137,11 +105,9 @@
 				</b:row>
 			</b:container>
 		</h:form>
+</ui:define>
 
-	</div>
-
-	<div id="footer"></div>
-
+</ui:composition>
 </h:body>
 
 </html>
