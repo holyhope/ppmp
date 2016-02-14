@@ -6,15 +6,36 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:b="http://bootsfaces.net/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<f:metadata>
+		<f:viewAction action="#{displayUsersBean.onPageLoad}" />
+	</f:metadata>
 
 	<ui:define name="title">Welcome #{loginBean.user.first_name} #{loginBean.user.last_name}</ui:define>
 
 	<ui:define name="content">
+	<b:container>
 		<p>Welcome #{loginBean.user.first_name}
 			#{loginBean.user.last_name}</p>
+		<b:dataTable value="#{displayUsersBean.users}" var="user" id="usersId"
+			styleClass="table table-striped table-bordered" style="width:100%">
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="First Name" />
+				</f:facet>
+				<h:outputText value="#{user.first_name}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Last Name" />
+				</f:facet>
+				<h:outputText value="#{user.last_name}" />
+			</h:column>
+		</b:dataTable>
+		
 		<h:form>
 			<h:commandLink action="#{loginBean.logout}" value="Logout"></h:commandLink>
 		</h:form>
+		</b:container>
 	</ui:define>
 
 </ui:composition>

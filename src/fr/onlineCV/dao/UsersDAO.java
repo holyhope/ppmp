@@ -1,10 +1,14 @@
 package fr.onlineCV.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import fr.onlineCV.entities.User;
 
@@ -12,6 +16,7 @@ import fr.onlineCV.entities.User;
 public class UsersDAO {
 
     private static final String JPQL_SELECT_PAR_EMAIL = "SELECT u FROM User u WHERE u.email=:email";
+    private static final String JPQL_SELECT_ALL = "SELECT u FROM User u";
     private static final String PARAM_EMAIL           = "email";
 
     // Injecting manager that handle connection with DB
@@ -43,5 +48,17 @@ public class UsersDAO {
         }
         
         return user;
+    }
+    
+    
+	public List<User> selectAll() throws DAOException{
+    	TypedQuery<User> requete = em.createQuery(JPQL_SELECT_ALL, User.class);
+    	List<User> user = new ArrayList<>();
+    	try{
+    		user = requete.getResultList();
+    	}catch(Exception e){
+    		throw new DAOException(e);
+    	}
+    	return user;
     }
 }
