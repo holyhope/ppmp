@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+	<ui:define name="title">OnlineCV Login</ui:define>
+	<ui:define name="loadBundle">
+		<f:loadBundle basename="fr.onlineCV.bundle.registerMsg"
+			var="registerMsg" />
+	</ui:define>
+
+	<ui:define name="content">
+
+		<h:form prependId="false">
+			<b:container layout="fluid">
+				<h2 class="form-signin-heading">Please sign in</h2>
+
+				<b:row>
+					<b:column span="9">
+						<b:inputText id="email"
+							placeholder="#{registerMsg['register.placeholder.email']}"
+							value="#{loginBean.user.email}">
+							<f:facet name="prepend">
+								<b:iconAwesome name="at" />
+							</f:facet>
+							<f:ajax event="blur" render="emailMessage" />
+						</b:inputText>
+					</b:column>
+					<b:column span="3">
+						<h:message style="color:red;margin:8px;" id="emailMessage"
+							for="email" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column span="9">
+						<b:inputText id="password"
+							placeholder="#{registerMsg['register.placeholder.password']}"
+							type="password" value="#{loginBean.user.hash_password}">
+
+							<f:facet name="prepend">
+								<b:iconAwesome name="key" />
+							</f:facet>
+							<f:ajax event="blur" render="passwordMessage" />
+						</b:inputText>
+					</b:column>
+					<b:column span="3">
+						<h:message style="color:red;margin:8px;" id="passwordMessage"
+							for="password" />
+					</b:column>
+				</b:row>
+				
+				<b:row>
+					<b:column span="9">
+						<b:commandButton look="primary btn-block" value="Sign In"
+							icon="log-in" size="lg" action="#{loginBean.login}" />
+					</b:column>
+				</b:row>
+			</b:container>
+		</h:form>
+	</ui:define>
+</ui:composition>

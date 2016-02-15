@@ -20,6 +20,7 @@ public class LoginBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	public static final String USER = "user";
 	private User user;
+	private boolean isConnected = false;
 
 	@EJB
 	private UsersDAO userDao;
@@ -37,12 +38,12 @@ public class LoginBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, message);
 			SessionBean.createSession().setAttribute(USER, userEmail);
 			user = userEmail;
+			isConnected = true;
 			return "Profile?faces-redirect=true";
 		} else {
-			FacesMessage message = new FacesMessage("userEmail = " + userEmail.getHash_password() + " user = "
-					+ PasswordConvert.hashPassword(user.getHash_password()));
+			FacesMessage message = new FacesMessage("Wrong password !");
 			FacesContext.getCurrentInstance().addMessage(null, message);
-			return "inscription";
+			return "login";
 		}
 	}
 	
@@ -50,10 +51,14 @@ public class LoginBean implements Serializable {
     public String logout() {
         HttpSession session = SessionBean.getSession();
         session.invalidate();
-        return "inscription?faces-redirect=true";
+        return "login?faces-redirect=true";
     }
-
+    
 	public User getUser() {
 		return user;
+	}
+	
+	public boolean getIsConnected(){
+		return isConnected;
 	}
 }

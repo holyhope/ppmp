@@ -48,7 +48,7 @@ public class User {
 	 */
 	@NotNull(message = "{password.notNull}")
 	@Size(min = 5, message = "{password.minSize}")
-	@Convert(converter = PasswordConvert.class)
+	//@Convert(converter = PasswordConvert.class)
 	// @Converter( name = "passwordConverter", converterClass =
 	// PasswordConvert.class )
 	private String hash_password;

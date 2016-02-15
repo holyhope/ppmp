@@ -8,8 +8,10 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<ui:define name="title">Inscription à OnlineCV</ui:define>
-	<f:loadBundle basename="fr.onlineCV.bundle.registerMsg"
-		var="registerMsg" />
+	<ui:define name="loadBundle">
+		<f:loadBundle basename="fr.onlineCV.bundle.registerMsg"
+			var="registerMsg" />
+	</ui:define>
 
 	<ui:define name="content">
 		<h:form prependId="false">
@@ -68,7 +70,7 @@
 						<b:inputText id="password"
 							placeholder="#{registerMsg['register.placeholder.password']}"
 							type="password" value="#{registerBean.user.hash_password}">
-
+							
 							<f:facet name="prepend">
 								<b:iconAwesome name="key" />
 							</f:facet>

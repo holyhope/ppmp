@@ -9,6 +9,7 @@ import javax.faces.context.FacesContext;
 
 import fr.onlineCV.dao.UsersDAO;
 import fr.onlineCV.entities.User;
+import fr.onlineCV.tools.PasswordConvert;
 
 @ManagedBean
 @RequestScoped
@@ -26,6 +27,7 @@ public class RegisterBean implements Serializable {
 
     // Method called when button of register form clicked
     public void register() {
+    	user.setHash_password(PasswordConvert.hashPassword(user.getHash_password()));
         userDao.create( user );
         FacesMessage message = new FacesMessage( "Succès de l'inscription !" );
         FacesContext.getCurrentInstance().addMessage( null, message );
