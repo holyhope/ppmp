@@ -67,9 +67,10 @@
     <scope>compile</scope>
 </dependency>
 <dependency>
-	<groupId>com.jolbox</groupId>
-	<artifactId>bonecp</artifactId>
-	<version>0.8.0.RELEASE</version>
+    <groupId>org.primefaces</groupId>
+    <artifactId>primefaces</artifactId>
+    <version>5.3</version>
+    <scope>compile</scope>
 </dependency>
 <dependency>
 	<groupId>org.eclipse.persistence</groupId>
