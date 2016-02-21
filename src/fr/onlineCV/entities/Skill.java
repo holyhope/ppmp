@@ -24,13 +24,13 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Maxime
  */
 @Entity
-@Table(name = "hobby", catalog = "online_cv", schema = "")
+@Table(name = "skill", catalog = "online_cv", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Hobby.findAll", query = "SELECT h FROM Hobby h"),
-    @NamedQuery(name = "Hobby.findById", query = "SELECT h FROM Hobby h WHERE h.id = :id"),
-    @NamedQuery(name = "Hobby.findByLabel", query = "SELECT h FROM Hobby h WHERE h.label = :label")})
-public class Hobby implements Serializable {
+    @NamedQuery(name = "Skill.findAll", query = "SELECT s FROM Skill s"),
+    @NamedQuery(name = "Skill.findById", query = "SELECT s FROM Skill s WHERE s.id = :id"),
+    @NamedQuery(name = "Skill.findByLabel", query = "SELECT s FROM Skill s WHERE s.label = :label")})
+public class Skill implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,13 +42,13 @@ public class Hobby implements Serializable {
     @Lob
     @Column(name = "description")
     private String description;
-    @ManyToMany(mappedBy = "hobbyList")
+    @ManyToMany(mappedBy = "skillList")
     private List<User> usersList;
 
-    public Hobby() {
+    public Skill() {
     }
 
-    public Hobby(Integer id) {
+    public Skill(Integer id) {
         this.id = id;
     }
 
@@ -95,10 +95,10 @@ public class Hobby implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Hobby)) {
+        if (!(object instanceof Skill)) {
             return false;
         }
-        Hobby other = (Hobby) object;
+        Skill other = (Skill) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -107,7 +107,7 @@ public class Hobby implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.mavenproject1.Hobby[ id=" + id + " ]";
+        return "com.mycompany.mavenproject1.Skill[ id=" + id + " ]";
     }
     
 }

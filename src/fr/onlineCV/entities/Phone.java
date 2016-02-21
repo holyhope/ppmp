@@ -6,49 +6,48 @@
 package fr.onlineCV.entities;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Maxime
  */
 @Entity
-@Table(name = "hobby", catalog = "online_cv", schema = "")
+@Table(name = "phone", catalog = "online_cv", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Hobby.findAll", query = "SELECT h FROM Hobby h"),
-    @NamedQuery(name = "Hobby.findById", query = "SELECT h FROM Hobby h WHERE h.id = :id"),
-    @NamedQuery(name = "Hobby.findByLabel", query = "SELECT h FROM Hobby h WHERE h.label = :label")})
-public class Hobby implements Serializable {
+    @NamedQuery(name = "Phone.findAll", query = "SELECT p FROM Phone p"),
+    @NamedQuery(name = "Phone.findById", query = "SELECT p FROM Phone p WHERE p.id = :id"),
+    @NamedQuery(name = "Phone.findByNumber", query = "SELECT p FROM Phone p WHERE p.number = :number"),
+    @NamedQuery(name = "Phone.findByType", query = "SELECT p FROM Phone p WHERE p.type = :type")})
+public class Phone implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "label")
-    private String label;
-    @Lob
-    @Column(name = "description")
-    private String description;
-    @ManyToMany(mappedBy = "hobbyList")
-    private List<User> usersList;
+    @Column(name = "number")
+    private String number;
+    @Column(name = "type")
+    private String type;
+    @JoinColumn(name = "id_users", referencedColumnName = "id")
+    @ManyToOne
+    private User idUsers;
 
-    public Hobby() {
+    public Phone() {
     }
 
-    public Hobby(Integer id) {
+    public Phone(Integer id) {
         this.id = id;
     }
 
@@ -60,29 +59,28 @@ public class Hobby implements Serializable {
         this.id = id;
     }
 
-    public String getLabel() {
-        return label;
+    public String getNumber() {
+        return number;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
-    public String getDescription() {
-        return description;
+    public String getType() {
+        return type;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    @XmlTransient
-    public List<User> getUsersList() {
-        return usersList;
+    public User getIdUsers() {
+        return idUsers;
     }
 
-    public void setUsersList(List<User> usersList) {
-        this.usersList = usersList;
+    public void setIdUsers(User idUsers) {
+        this.idUsers = idUsers;
     }
 
     @Override
@@ -95,10 +93,10 @@ public class Hobby implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Hobby)) {
+        if (!(object instanceof Phone)) {
             return false;
         }
-        Hobby other = (Hobby) object;
+        Phone other = (Phone) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -107,7 +105,7 @@ public class Hobby implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.mavenproject1.Hobby[ id=" + id + " ]";
+        return "com.mycompany.mavenproject1.Phone[ id=" + id + " ]";
     }
     
 }

@@ -24,15 +24,14 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Maxime
  */
 @Entity
-@Table(name = "school")
+@Table(name = "diploma")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "School.findAll", query = "SELECT s FROM School s"),
-    @NamedQuery(name = "School.findById", query = "SELECT s FROM School s WHERE s.id = :id"),
-    @NamedQuery(name = "School.findByLabel", query = "SELECT s FROM School s WHERE s.label = :label"),
-    @NamedQuery(name = "School.findByLocation", query = "SELECT s FROM School s WHERE s.location = :location"),
-    @NamedQuery(name = "School.findByType", query = "SELECT s FROM School s WHERE s.type = :type")})
-public class School implements Serializable {
+    @NamedQuery(name = "Diploma.findAll", query = "SELECT d FROM Diploma d"),
+    @NamedQuery(name = "Diploma.findById", query = "SELECT d FROM Diploma d WHERE d.id = :id"),
+    @NamedQuery(name = "Diploma.findByLabel", query = "SELECT d FROM Diploma d WHERE d.label = :label"),
+    @NamedQuery(name = "Diploma.findBySpecialization", query = "SELECT d FROM Diploma d WHERE d.specialization = :specialization")})
+public class Diploma implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,19 +40,15 @@ public class School implements Serializable {
     private Integer id;
     @Column(name = "label")
     private String label;
-    @Column(name = "location")
-    private String location;
-    @Column(name = "type")
-    private String type;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "school")
+    @Column(name = "specialization")
+    private String specialization;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "diploma")
     private List<Obtain> obtainList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "school")
-    private List<Study> studyList;
 
-    public School() {
+    public Diploma() {
     }
 
-    public School(Integer id) {
+    public Diploma(Integer id) {
         this.id = id;
     }
 
@@ -73,20 +68,12 @@ public class School implements Serializable {
         this.label = label;
     }
 
-    public String getLocation() {
-        return location;
+    public String getSpecialization() {
+        return specialization;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+    public void setSpecialization(String specialization) {
+        this.specialization = specialization;
     }
 
     @XmlTransient
@@ -96,15 +83,6 @@ public class School implements Serializable {
 
     public void setObtainList(List<Obtain> obtainList) {
         this.obtainList = obtainList;
-    }
-
-    @XmlTransient
-    public List<Study> getStudyList() {
-        return studyList;
-    }
-
-    public void setStudyList(List<Study> studyList) {
-        this.studyList = studyList;
     }
 
     @Override
@@ -117,10 +95,10 @@ public class School implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof School)) {
+        if (!(object instanceof Diploma)) {
             return false;
         }
-        School other = (School) object;
+        Diploma other = (Diploma) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -129,7 +107,7 @@ public class School implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.mavenproject1.School[ id=" + id + " ]";
+        return "com.mycompany.mavenproject1.Diploma[ id=" + id + " ]";
     }
     
 }
