@@ -5,6 +5,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 
@@ -40,7 +41,7 @@
 					<b:column span="9">
 						<b:inputText id="password"
 							placeholder="#{registerMsg['register.placeholder.password']}"
-							type="password" value="#{loginBean.user.hash_password}">
+							type="password" value="#{loginBean.user.hashPassword}">
 
 							<f:facet name="prepend">
 								<b:iconAwesome name="key" />

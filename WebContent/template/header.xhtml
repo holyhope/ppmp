@@ -6,23 +6,25 @@
 	xmlns:b="http://bootsfaces.net/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <ui:composition>
-	<b:navBar brand="OnlineCV" brandHref="login.xhtml" inverse="true" fixed="top">
+	<b:navBar brand="OnlineCV" brandHref="login.xhtml" inverse="true"
+		fixed="top">
 		<b:navbarLinks>
 			<b:navLink value="Profile" href="Profile.xhtml"></b:navLink>
 			<b:navLink value="Sign Up" href="inscription.xhtml"></b:navLink>
-			<b:dropMenu value="Dropdown">
-				<b:navLink value="Action" href="#"></b:navLink>
-				<b:navLink value="Another action" href="#"></b:navLink>
-				<b:navLink value="Something else here" href="#"></b:navLink>
-				<b:navLink></b:navLink>
-				<b:navLink header="Nav header"></b:navLink>
-				<b:navLink value="Separated link" href="#"></b:navLink>
-				<b:navLink value="One more separated link" href="#"></b:navLink>
-			</b:dropMenu>
+			
 		</b:navbarLinks>
-		<b:container rendered="#{loginBean.isConnected}" styleClass="navbar-form navbar-right" style="color:white">
-		<p>Welcome #{loginBean.user.first_name}
-			#{loginBean.user.last_name}</p>
+		<h:form class="navbar-form navbar-left "
+			role="search">
+			<div class="form-group">
+				<b:inputText type="text" class="form-control" placeholder="Search Personn" value="#{searchBean.user.firstName}" />
+			</div>
+			<b:commandButton action="#{searchBean.searchByFirstName}"
+				type="submit" class="btn btn-default" value="Submit" />
+		</h:form>
+		<b:container rendered="#{loginBean.isConnected}"
+			styleClass="navbar-form navbar-right" style="color:white">
+			<p>Welcome #{loginBean.user.first_name}
+				#{loginBean.user.last_name}</p>
 		</b:container>
 		<h:form styleClass="navbar-form navbar-right"
 			rendered="#{not loginBean.isConnected}">
@@ -32,14 +34,13 @@
 			</div>
 			<div class="form-group">
 				<b:inputSecret id="passwordConn" placeholder="Password"
-					fieldSize="sm" value="#{loginBean.user.hash_password}" />
+					fieldSize="sm" value="#{loginBean.user.hashPassword}" />
 			</div> 
-                #{' '}
                 <b:commandButton action="#{loginBean.login}"
 				value="Sign in" look="success" icon="chevron-right"
 				iconAlign="right" />
 		</h:form>
-		
+
 	</b:navBar>
 </ui:composition>
 </html>

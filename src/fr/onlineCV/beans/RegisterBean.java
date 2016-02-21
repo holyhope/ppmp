@@ -27,7 +27,7 @@ public class RegisterBean implements Serializable {
 
     // Method called when button of register form clicked
     public void register() {
-    	user.setHash_password(PasswordConvert.hashPassword(user.getHash_password()));
+    	user.setHashPassword(PasswordConvert.hashPassword(user.getHashPassword()));
         userDao.create( user );
         FacesMessage message = new FacesMessage( "Succès de l'inscription !" );
         FacesContext.getCurrentInstance().addMessage( null, message );

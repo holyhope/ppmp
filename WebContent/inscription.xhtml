@@ -21,7 +21,7 @@
 					<b:column span="9">
 						<b:inputText id="first_name"
 							placeholder="#{registerMsg['register.placeholder.firstName']}"
-							value="#{registerBean.user.first_name}">
+							value="#{registerBean.user.firstName}">
 							<f:facet name="prepend">
 								<b:icon name="user" />
 							</f:facet>
@@ -37,7 +37,7 @@
 					<b:column span="9">
 						<b:inputText id="last_name"
 							placeholder="#{registerMsg['register.placeholder.lastName']}"
-							value="#{registerBean.user.last_name}">
+							value="#{registerBean.user.lastName}">
 							<f:facet name="prepend">
 								<b:icon name="user" />
 							</f:facet>
@@ -69,7 +69,7 @@
 					<b:column span="9">
 						<b:inputText id="password"
 							placeholder="#{registerMsg['register.placeholder.password']}"
-							type="password" value="#{registerBean.user.hash_password}">
+							type="password" value="#{registerBean.user.hashPassword}">
 							
 							<f:facet name="prepend">
 								<b:iconAwesome name="key" />

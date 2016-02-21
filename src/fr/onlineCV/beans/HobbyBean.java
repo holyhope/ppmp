@@ -26,6 +26,6 @@ public class HobbyBean implements Serializable {
 	private HobbyDAO hobbyDao;
 
 	public void add() {
-		hobbyDao.add(hobby, (User) SessionBean.getSession().getAttribute(LoginBean.USER));
+		//hobbyDao.add(hobby, (User) SessionBean.getSession().getAttribute(LoginBean.USER));
 	}
 }
