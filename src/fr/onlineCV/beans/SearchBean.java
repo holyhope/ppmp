@@ -19,7 +19,7 @@ public class SearchBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private User user;
 	private List<User> users;
-	
+
 	@EJB
 	private UsersDAO userDao;
 
@@ -27,19 +27,24 @@ public class SearchBean implements Serializable {
 		user = new User();
 		users = new ArrayList<>();
 	}
-	
-	public String searchByFirstName(){
-		System.out.println("user firstName = " + user.getFirstName());
-		users = userDao.findByFirstName(user.getFirstName());
-		
-		return "Profile";
+
+	public String searchByFirstName() {
+
+		if (SessionBean.isConnected()) {
+			
+			users = userDao.findByFirstName(user.getFirstName());
+
+			return "Profile";
+		} else {
+			return "login";
+		}
 	}
 
 	public List<User> getUsers() {
 		return users;
 	}
-	
-	public User getUser(){
+
+	public User getUser() {
 		return user;
 	}
 }

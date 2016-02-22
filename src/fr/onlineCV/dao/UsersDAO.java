@@ -58,7 +58,6 @@ public class UsersDAO {
 
 		try {
 			users = (List<User>) query.getResultList();
-			System.out.println("Size list Users = " + users.size());
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
