@@ -50,5 +50,17 @@ public class CompanyDAO {
 		}
 		return company;
 	}
+	
+	public List<Company> findByLabelLike(String label) {
+		TypedQuery<Company> query = em.createNamedQuery("Company.findByLabelLike", Company.class);
+		query.setParameter("label", label + "%");
+		List<Company> companies = new ArrayList<>();
+		try {
+			companies = query.getResultList();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
+		return companies;
+	}
 
 }

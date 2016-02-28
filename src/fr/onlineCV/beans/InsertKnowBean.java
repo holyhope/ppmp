@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 
 import fr.onlineCV.dao.SkillDAO;
 import fr.onlineCV.dao.UsersDAO;
@@ -13,7 +13,7 @@ import fr.onlineCV.entities.Skill;
 import fr.onlineCV.entities.User;
 
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class InsertKnowBean {
 
 	private User user;
@@ -32,11 +32,11 @@ public class InsertKnowBean {
 	}
 	
 	public void addSkill(){
-		List<Skill> skillList = new ArrayList<>();
-		skillListLabel.stream().forEach(x -> skillList.add(skillDao.findByLabel(x)));
+		final List<Skill> skillList;
 		user = (User) SessionBean.getSession().getAttribute(LoginBean.USER);
 		user = usersDao.find(user.getEmail());
-		//skillList.stream().forEach(x -> System.out.println("label = " + x.getLabel()));
+		skillList = user.getSkillList();
+		skillListLabel.stream().forEach(x -> skillList.add(skillDao.findByLabel(x)));
 		user.setSkillList(skillList);
 		usersDao.update(user);
 	}
