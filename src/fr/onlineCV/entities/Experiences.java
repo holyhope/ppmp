@@ -18,6 +18,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Pattern;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -25,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Maxime
  */
 @Entity
-@Table(name = "experiences", catalog = "online_cv", schema = "")
+@Table(name = "experiences")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Experiences.findAll", query = "SELECT e FROM Experiences e"),

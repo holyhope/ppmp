@@ -24,12 +24,13 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Maxime
  */
 @Entity
-@Table(name = "skill", catalog = "online_cv", schema = "")
+@Table(name = "skill")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Skill.findAll", query = "SELECT s FROM Skill s"),
     @NamedQuery(name = "Skill.findById", query = "SELECT s FROM Skill s WHERE s.id = :id"),
-    @NamedQuery(name = "Skill.findByLabel", query = "SELECT s FROM Skill s WHERE s.label = :label")})
+    @NamedQuery(name = "Skill.findByLabel", query = "SELECT s FROM Skill s WHERE s.label = :label"),
+    @NamedQuery(name = "Skill.findByLabelLike", query = "SELECT s FROM Skill s WHERE s.label LIKE :label")})
 public class Skill implements Serializable {
 
     private static final long serialVersionUID = 1L;

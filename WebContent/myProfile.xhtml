@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<f:metadata>
+		<f:viewAction action="#{displayUsersBean.onPageLoad}" />
+	</f:metadata>
+
+	<ui:define name="title">Profile of #{loginBean.user.firstName} #{loginBean.user.lastName}</ui:define>
+
+	<ui:define name="content">
+		<p>Welcome to your profile #{loginBean.user.firstName}
+			#{loginBean.user.lastName}</p>
+		<b:container>
+		
+			
+			
+				<h3 style="margin-top: 0">Add something</h3>
+				<p:tabView>
+					<p:tab title="Add new Experience">
+					<h:form>
+					<p:growl id="msgs" showDetail="true" />
+						<h:panelGrid  columns="2" cellpadding="5" >
+							<p:outputLabel value="Company" for="acCompany" />
+							<p:autoComplete id="acCompany" forceSelection="true"
+								value="#{insertExperienceBean.company.label}"
+								completeMethod="#{autoCompleteBean.completeTextCompany}" />
+							<p:outputLabel value = "Label" for="iLabel"/>
+							<p:inputText id="iLabel" value="#{insertExperienceBean.experiences.label}"/>
+							<p:outputLabel value = "Description" for="iDescription"/>
+							<p:inputTextarea id="iDescription" rows="6" cols="20" value="#{insertExperienceBean.experiences.description}"/>
+							<p:outputLabel for="iDate" value="Year Start" />
+       					 	<p:calendar id="iDate" value="#{insertExperienceBean.experiences.yearStart}" pattern="yyyy/MM/dd" mask="9999/99/99"/>
+       					 	<p:outputLabel for="iDate2" value="Year End" />
+       					 	<p:calendar id="iDate2" value="#{insertExperienceBean.experiences.yearEnd}" pattern="yyyy/MM/dd" mask="9999/99/99"/>
+       					 	<p:commandButton value="Add experience" id="addExperience" update="msgs" actionListener="#{insertExperienceBean.addExperience}" styleClass="ui-priority-primary" />
+						</h:panelGrid>
+						</h:form>
+					</p:tab>
+					<p:tab title="Add new Skill">
+						<h:form>
+					<p:growl id="msgs" showDetail="true" />
+						<h:panelGrid  columns="2" cellpadding="5" >
+							<p:outputLabel value="Skill" for="acSkill" />
+							<p:autoComplete id="acSkill" forceSelection="true"
+								value="#{insertKnowBean.skillListLabel}"
+								completeMethod="#{autoCompleteBean.completeTextSkill}"
+								maxResults="5"
+								multiple="true" />
+       					 	<p:commandButton value="Add Skill" id="addSkill" update="msgs" actionListener="#{insertKnowBean.addSkill}" styleClass="ui-priority-primary" />
+						</h:panelGrid>
+						</h:form>
+					</p:tab>
+					<p:tab title="Add new Hobby">
+						<h:panelGrid columns="2" cellpadding="10">
+
+							
+						</h:panelGrid>
+					</p:tab>
+				</p:tabView>
+			
+		</b:container>
+	</ui:define>
+</ui:composition>

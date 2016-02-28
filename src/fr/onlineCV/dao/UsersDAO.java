@@ -33,6 +33,28 @@ public class UsersDAO {
 		}
 	}
 
+	public void update(User user) {
+		try {
+			em.merge(user);
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
+	}
+
+	public User findById(int id) {
+		User user = null;
+		TypedQuery<User> query = em.createNamedQuery("User.findById", User.class);
+		query.setParameter("id", id);
+		try {
+			user = (User) query.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
+		return user;
+	}
+
 	// Find user by email
 	public User find(String email) throws DAOException {
 		User user = null;
@@ -65,6 +87,22 @@ public class UsersDAO {
 		}
 
 		return users;
+	}
+
+	public User getUserByFirstAndLastName(String firstName, String lastName) {
+		User user = null;
+		TypedQuery<User> query = em.createNamedQuery("User.findByFirstAndLastName", User.class);
+		query.setParameter("firstName", firstName);
+		query.setParameter("lastName", lastName);
+		try {
+			user = (User) query.getSingleResult();
+		} catch (NoResultException e) {
+			System.out.println("Returned NULL !");
+			return null;
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
+		return user;
 	}
 
 	public List<User> selectAll() throws DAOException {
