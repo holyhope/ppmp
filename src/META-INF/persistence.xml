@@ -9,8 +9,8 @@
         <class>fr.onlineCV.entities.School</class>
         <class>fr.onlineCV.entities.Company</class>
         <class>fr.onlineCV.entities.Diploma</class>
-        <class>fr.onlineCV.entities.Experience</class>
-        <class>fr.onlineCV.entities.ExperiencePK</class>
+        <class>fr.onlineCV.entities.Experiences</class>
+        <class>fr.onlineCV.entities.ExperiencesPK</class>
         <class>fr.onlineCV.entities.Obtain</class>
         <class>fr.onlineCV.entities.ObtainPK</class>
         <class>fr.onlineCV.entities.Phone</class>

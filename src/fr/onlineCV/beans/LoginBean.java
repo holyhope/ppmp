@@ -39,7 +39,7 @@ public class LoginBean implements Serializable {
 			SessionBean.createSession().setAttribute(USER, userEmail);
 			user = userEmail;
 			isConnected = true;
-			return "Profile?faces-redirect=true";
+			return "myProfile?faces-redirect=true";
 		} else {
 			FacesMessage message = new FacesMessage("Wrong password !");
 			FacesContext.getCurrentInstance().addMessage(null, message);

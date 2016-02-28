@@ -34,10 +34,15 @@ public class SearchBean implements Serializable {
 			
 			users = userDao.findByFirstName(user.getFirstName());
 
-			return "Profile";
+			return "search";
 		} else {
 			return "login";
 		}
+	}
+	
+	public String showUser(){
+		user = userDao.findById(user.getId());
+		return "Profile";
 	}
 
 	public List<User> getUsers() {

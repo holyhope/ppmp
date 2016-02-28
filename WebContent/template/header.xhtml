@@ -3,33 +3,34 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <ui:composition>
 	<b:navBar brand="OnlineCV" brandHref="login.xhtml" inverse="true"
 		fixed="top">
 		<b:navbarLinks>
-			<b:navLink value="Profile" href="Profile.xhtml"></b:navLink>
+			<b:navLink value="Profile" href="myProfile.xhtml"></b:navLink>
 			<b:navLink value="Sign Up" href="inscription.xhtml"></b:navLink>
 
 		</b:navbarLinks>
-		<h:form class="navbar-form navbar-left " role="search">
+		<h:form rendered="#{loginBean.isConnected}"
+			class="navbar-form navbar-left " role="search">
 			<div class="form-group">
 				<b:inputText type="text" class="form-control"
-					placeholder="Search Personn" value="#{searchBean.user.firstName}" />
+					placeholder="Search..." value="#{searchBean.user.firstName}" />
 			</div>
 			<b:commandButton action="#{searchBean.searchByFirstName}"
 				type="submit" class="btn btn-default" value="Submit" />
 		</h:form>
-		<b:container rendered="#{loginBean.isConnected}"
-			styleClass="navbar-form " style="color:white">
-		</b:container>
-		<b:navbarLinks styleClass="navbar-right" rendered="#{loginBean.isConnected}">
+		<b:container rendered="#{loginBean.isConnected}">
 			<b:navLink
-				value="Welcome #{loginBean.user.firstName} #{loginBean.user.lastName}"></b:navLink>
-			<b:navLink value="Logout" action="#{loginBean.logout}"></b:navLink>
-		</b:navbarLinks>
-
+				value="Welcome #{loginBean.user.firstName}
+				#{loginBean.user.lastName}"></b:navLink>
+			<h:form>
+				<p:commandLink action="#{loginBean.logout}" value="Logout"
+					type="submit" />
+			</h:form>
+		</b:container>
 		<h:form styleClass="navbar-form navbar-right"
 			rendered="#{not loginBean.isConnected}">
 			<div class="form-group">
