@@ -6,30 +6,98 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-	<f:metadata>
-		<f:viewAction action="#{displayUsersBean.onPageLoad}" />
-	</f:metadata>
 
 	<ui:define name="title">Welcome #{loginBean.user.firstName} #{loginBean.user.lastName}</ui:define>
 
 	<ui:define name="content">
-		<b:container>
-			<p>This is the profile of #{searchBean.user.firstName} #{searchBean.user.lastName}</p>
-			<p:dataTable value="#{displayUsersBean.users}" var="user"
-				id="usersId" styleClass="table table-striped table-bordered"
-				style="width:100%">
-				<p:column headerText="First Name">
-					<h:outputText value="#{user.firstName}" />
-				</p:column>
-				<p:column headerText="Last Name">
-					<h:outputText value="#{user.lastName}" />
-				</p:column>
-			</p:dataTable>
+			<b:container id="displayUser">
+			<b:row>
+				<b:column span="1">
+					<p:outputLabel value="First Name" for="oFirstName" />
+				</b:column>
+				<b:column span="3">
+					<h:outputText id="oFirstName"
+						value="#{searchBean.user.firstName}" />
+				</b:column>
+			</b:row>
+			<b:row>
+				<b:column span="1">
+					<p:outputLabel value="Last Name" for="oLastName" />
+				</b:column>
+				<b:column span="3">
+					<h:outputText id="oLastName"
+						value="#{searchBean.user.lastName}" />
+				</b:column>
+			</b:row>
+			<b:row rendered="#{searchBean.isMyProfile}">
+				<b:column span="1">
+					<p:outputLabel value="Email" for="oEmail" />
+				</b:column>
+				<b:column span="3">
+					<h:outputText id="oEmail" value="#{searchBean.user.email}" />
+				</b:column>
+			</b:row>
+			<b:row>
+				<b:column span="1">
+					<p:outputLabel value="Birthday" for="oBirthday" />
+				</b:column>
+				<b:column span="3">
+					<h:outputText id="oBirthday"
+						value="#{searchBean.user.birthdate}" />
+				</b:column>
+			</b:row>
+			<b:row>
+				<b:column span="1">
+					<p:outputLabel value="Skills" />
+				</b:column>
+				<ui:repeat value="#{searchBean.user.skillList}"
+					var="skillList">
+					<b:column span="2">
+						<h:outputText value="#{skillList.label}" />
+					</b:column>
+				</ui:repeat>
+			</b:row>
+			<b:row>
+				<b:column span="1">
+					<p:outputLabel value="Hobbies" />
+				</b:column>
+				<ui:repeat value="#{searchBean.user.hobbyList}"
+					var="hobbyList">
+					<b:column span="2">
+						<h:outputText value="#{hobbyList.label}" />
+					</b:column>
+				</ui:repeat>
+			</b:row>
+			<b:row>
+				<b:column span="1">
+					<p:outputLabel value="Experiences" />
+				</b:column>
+				<ui:repeat value="#{searchBean.user.experiencesList}"
+					var="experiencesList">
+					<b:column span="1">
+						<p:outputLabel value="CompanyLabel" for="CompanyLabel" />
+					</b:column>
+					<b:column span="1">
+						<h:outputText id="CompanyLabel"
+							value="#{experiencesList.company.label}" />
+					</b:column>
+					<b:column span="1">
+						<p:outputLabel value="experienceLabel" for="experienceLabel" />
+					</b:column>
+					<b:column span="1">
+						<h:outputText id="experienceLabel"
+							value="#{experiencesList.label}" />
+					</b:column>
+					<b:column span="1">
+						<p:outputLabel value="yearSart" for="yearStart" />
+					</b:column>
+					<b:column span="1">
+						<h:outputText id="yearStart" value="#{experiencesList.yearStart}" />
+					</b:column>
 
-			<h:form>
-				<h:commandLink action="#{loginBean.logout}" value="Logout"></h:commandLink>
-			</h:form>
-		</b:container>
+				</ui:repeat>
+			</b:row>
+			</b:container>
 	</ui:define>
 
 </ui:composition>
