@@ -1,35 +1,36 @@
 package fr.onlineCV.beans;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import fr.onlineCV.dao.UsersDAO;
 import fr.onlineCV.entities.User;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class DisplayUsersBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private List<User> users;
+	private User user;
 	
 	@EJB
 	private UsersDAO userDao;
 	
 	public void onPageLoad(){
-		users = userDao.selectAll();
+		user = (User) SessionBean.getSession().getAttribute(LoginBean.USER);
+		user = userDao.find(user.getEmail());
 	}
 
-	public DisplayUsersBean() {
-		users = new ArrayList<>();
+	public User getUser() {
+		return user;
 	}
 
-	public List<User> getUsers() {
-		return users;
+	public void setUser(User user) {
+		this.user = user;
 	}
+
+	
 }

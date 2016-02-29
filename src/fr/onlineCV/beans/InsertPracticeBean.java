@@ -1,11 +1,15 @@
 package fr.onlineCV.beans;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 import fr.onlineCV.dao.HobbyDAO;
 import fr.onlineCV.dao.UsersDAO;
@@ -31,7 +35,7 @@ public class InsertPracticeBean {
 		hobbyListLabel = new ArrayList<>();
 	}
 	
-	public void addHobby(){
+	public void addHobby() throws IOException{
 		final List<Hobby> hobbyList;
 		user = (User) SessionBean.getSession().getAttribute(LoginBean.USER);
 		user = usersDao.find(user.getEmail());
@@ -39,6 +43,8 @@ public class InsertPracticeBean {
 		hobbyListLabel.stream().forEach(x -> hobbyList.add(hobbyDao.findByLabel(x)));
 		user.setHobbyList(hobbyList);
 		usersDao.update(user);
+		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+	    ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
 	}
 
 	public User getUser() {

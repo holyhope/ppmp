@@ -1,11 +1,15 @@
 package fr.onlineCV.beans;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 import fr.onlineCV.dao.SkillDAO;
 import fr.onlineCV.dao.UsersDAO;
@@ -31,7 +35,7 @@ public class InsertKnowBean {
 		skillListLabel = new ArrayList<>();
 	}
 	
-	public void addSkill(){
+	public void addSkill() throws IOException{
 		final List<Skill> skillList;
 		user = (User) SessionBean.getSession().getAttribute(LoginBean.USER);
 		user = usersDao.find(user.getEmail());
@@ -39,6 +43,8 @@ public class InsertKnowBean {
 		skillListLabel.stream().forEach(x -> skillList.add(skillDao.findByLabel(x)));
 		user.setSkillList(skillList);
 		usersDao.update(user);
+		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+	    ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
 	}
 
 	public User getUser() {

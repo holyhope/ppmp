@@ -6,15 +6,106 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-	<f:metadata>
-		<f:viewAction action="#{displayUsersBean.onPageLoad}" />
-	</f:metadata>
+	<ui:define name="onPageLoad">
+		<f:metadata>
+			<f:viewAction action="#{displayUsersBean.onPageLoad}" />
+		</f:metadata>
+	</ui:define>
+
 
 	<ui:define name="title">Profile of #{loginBean.user.firstName} #{loginBean.user.lastName}</ui:define>
 
 	<ui:define name="content">
 		<p>Welcome to your profile #{loginBean.user.firstName}
 			#{loginBean.user.lastName}</p>
+		<b:container id="displayUser">
+			<b:row>
+				<b:column span="1">
+					<p:outputLabel value="First Name" for="oFirstName" />
+				</b:column>
+				<b:column span="3">
+					<h:outputText id="oFirstName"
+						value="#{displayUsersBean.user.firstName}" />
+				</b:column>
+			</b:row>
+			<b:row>
+				<b:column span="1">
+					<p:outputLabel value="Last Name" for="oLastName" />
+				</b:column>
+				<b:column span="3">
+					<h:outputText id="oLastName"
+						value="#{displayUsersBean.user.lastName}" />
+				</b:column>
+			</b:row>
+			<b:row>
+				<b:column span="1">
+					<p:outputLabel value="Email" for="oEmail" />
+				</b:column>
+				<b:column span="3">
+					<h:outputText id="oEmail" value="#{displayUsersBean.user.email}" />
+				</b:column>
+			</b:row>
+			<b:row>
+				<b:column span="1">
+					<p:outputLabel value="Birthday" for="oBirthday" />
+				</b:column>
+				<b:column span="3">
+					<h:outputText id="oBirthday"
+						value="#{displayUsersBean.user.birthdate}" />
+				</b:column>
+			</b:row>
+			<b:row>
+				<b:column span="1">
+					<p:outputLabel value="Skills" />
+				</b:column>
+				<ui:repeat value="#{displayUsersBean.user.skillList}"
+					var="skillList">
+					<b:column span="2">
+						<h:outputText value="#{skillList.label}" />
+					</b:column>
+				</ui:repeat>
+			</b:row>
+			<b:row>
+				<b:column span="1">
+					<p:outputLabel value="Hobbies" />
+				</b:column>
+				<ui:repeat value="#{displayUsersBean.user.hobbyList}"
+					var="hobbyList">
+					<b:column span="2">
+						<h:outputText value="#{hobbyList.label}" />
+					</b:column>
+				</ui:repeat>
+			</b:row>
+			<b:row>
+				<b:column span="1">
+					<p:outputLabel value="Experiences" />
+				</b:column>
+				<ui:repeat value="#{displayUsersBean.user.experiencesList}"
+					var="experiencesList">
+					<b:column span="1">
+						<p:outputLabel value="CompanyLabel" for="CompanyLabel" />
+					</b:column>
+					<b:column span="1">
+						<h:outputText id="CompanyLabel"
+							value="#{experiencesList.company.label}" />
+					</b:column>
+					<b:column span="1">
+						<p:outputLabel value="experienceLabel" for="experienceLabel" />
+					</b:column>
+					<b:column span="1">
+						<h:outputText id="experienceLabel"
+							value="#{experiencesList.label}" />
+					</b:column>
+					<b:column span="1">
+						<p:outputLabel value="yearSart" for="yearStart" />
+					</b:column>
+					<b:column span="1">
+						<h:outputText id="yearStart" value="#{experiencesList.yearStart}" />
+					</b:column>
+
+				</ui:repeat>
+			</b:row>
+		</b:container>
 		<b:container>
 			<h3 style="margin-top: 0">Add something</h3>
 			<p:tabView>
@@ -35,15 +126,15 @@
 							<p:outputLabel for="iDate" value="Year Start" />
 							<p:calendar id="iDate"
 								value="#{insertExperienceBean.experiences.yearStart}"
-								pattern="yyyy/MM/dd" mask="9999/99/99" />
+								pattern="dd/MM/yyyy" mask="99/99/9999" />
 							<p:outputLabel for="iDate2" value="Year End" />
 							<p:calendar id="iDate2"
 								value="#{insertExperienceBean.experiences.yearEnd}"
-								pattern="yyyy/MM/dd" mask="9999/99/99" />
+								pattern="dd/MM/yyyy" mask="99/99/9999" />
 							<p:commandButton value="Add experience" id="addExperience"
 								update="msgs"
 								actionListener="#{insertExperienceBean.addExperience}"
-								styleClass="ui-priority-primary" />
+								styleClass="ui-priority-primary" ajax="false" />
 						</h:panelGrid>
 					</h:form>
 				</p:tab>

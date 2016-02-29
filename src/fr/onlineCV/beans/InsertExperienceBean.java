@@ -1,15 +1,20 @@
 package fr.onlineCV.beans;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 import fr.onlineCV.dao.CompanyDAO;
 import fr.onlineCV.dao.ExperiencesDAO;
+import fr.onlineCV.dao.UsersDAO;
 import fr.onlineCV.entities.Company;
 import fr.onlineCV.entities.Experiences;
 import fr.onlineCV.entities.ExperiencesPK;
@@ -31,6 +36,9 @@ public class InsertExperienceBean implements Serializable {
 	
 	@EJB
 	private ExperiencesDAO experiencesDao;
+	
+	@EJB
+	private UsersDAO usersDao;
 
 	public InsertExperienceBean() {
 		company = new Company();
@@ -38,15 +46,21 @@ public class InsertExperienceBean implements Serializable {
 		experiences = new Experiences();
 	}
 	
-	public void addExperience(){
+	public void addExperience() throws IOException{
 		company = companyDao.findByLabel(company.getLabel());
 		user = (User) SessionBean.getSession().getAttribute(LoginBean.USER);
+		user = usersDao.find(user.getEmail());
 		experiences.setExperiencesPK(new ExperiencesPK(user.getId(), company.getId()));
 		experiences.setCompany(company);
 		experiences.setUsers(user);
 		experiencesDao.create(experiences);
+		List<Experiences> experiencesList = user.getExperiencesList();
+		experiencesList.add(experiences);
+		user.setExperiencesList(experiencesList);
 		FacesMessage message = new FacesMessage("experiences created");
 		FacesContext.getCurrentInstance().addMessage(null, message);
+		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+	    ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
 		
 	}
 
