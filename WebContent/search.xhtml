@@ -28,10 +28,10 @@
 				</p:column>
 
 				<p:column headerText="Show User">
-					<p:commandLink action="#{searchBean.showUser}" value="Show Profile">
+					<p:commandButton look="primary" action="#{searchBean.showUser}" value="Show Profile">
 						<f:setPropertyActionListener target="#{searchBean.user.id}"
 							value="#{user.id}" />
-					</p:commandLink>
+					</p:commandButton>
 				</p:column>
 			</p:dataTable>
 		</b:container>

@@ -28,22 +28,35 @@ public class SearchBean implements Serializable {
 		users = new ArrayList<>();
 	}
 
-	public String searchByFirstName() {
+	public List<User> searchByFirstName() {
 
-		if (SessionBean.isConnected()) {
-			users = userDao.findByFirstName(user.getFirstName());
-			return "search";
-		} else {
-			return "login";
-		}
+			return userDao.findByFirstNameLike(user.getFirstName());
+			
+		
+	}
+	
+	public String search(){
+		users = searchByFirstName();
+		users.addAll(searchByLastName());
+		return "search";
+	}
+	
+	public List<User> searchByLastName(){
+		return userDao.findByLastNameLike(user.getFirstName());
+		
 	}
 	
 	public String showUser(){
 		user = userDao.findById(user.getId());
 		User userSession = (User) SessionBean.getSession().getAttribute(LoginBean.USER);
+		if(userSession == null){
+			isMyProfile = false;
+		}
+		else{
 		userSession = userDao.find(userSession.getEmail());
 		isMyProfile = userSession.getId() == user.getId();
-		return "Profile";
+		}
+		return "Profile?faces-redirect=true";
 	}
 
 	public List<User> getUsers() {

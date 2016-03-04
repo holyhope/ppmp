@@ -72,11 +72,11 @@ public class UsersDAO {
 		return user;
 	}
 
-	public List<User> findByFirstName(String first_name) {
+	public List<User> findByFirstNameLike(String first_name) {
 		List<User> users = new ArrayList<>();
-		TypedQuery<User> query = em.createNamedQuery("User.findByFirstName", User.class);
+		TypedQuery<User> query = em.createNamedQuery("User.findByFirstNameLike", User.class);
 
-		query.setParameter("firstName", first_name);
+		query.setParameter("firstName", first_name + "%");
 
 		try {
 			users = (List<User>) query.getResultList();
@@ -114,5 +114,23 @@ public class UsersDAO {
 			throw new DAOException(e);
 		}
 		return user;
+	}
+
+	public List<User> findByLastNameLike(String lastName) {
+		List<User> users = new ArrayList<>();
+		TypedQuery<User> query = em.createNamedQuery("User.findByLastNameLike", User.class);
+
+		query.setParameter("lastName", lastName + "%");
+
+		try {
+			users = (List<User>) query.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
+
+		return users;
+		
 	}
 }
