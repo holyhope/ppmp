@@ -20,17 +20,18 @@
 					placeholder="Search..." value="#{searchBean.user.firstName}" />
 			</div>
 			<b:commandButton action="#{searchBean.searchByFirstName}"
-				type="submit" class="btn btn-default" value="Submit" />
+				type="submit" look="primary" value="Submit" />
 		</h:form>
-		<b:container rendered="#{loginBean.isConnected}">
+		<h:form styleClass="navbar-form navbar-right" rendered="#{loginBean.isConnected}">
+			<b:commandButton look="info" action="#{loginBean.logout}" value="Logout"
+				type="submit" />
+		</h:form>
+		<b:navbarLinks styleClass="navbar-right"
+			rendered="#{loginBean.isConnected}">
 			<b:navLink
 				value="Welcome #{loginBean.user.firstName}
 				#{loginBean.user.lastName}"></b:navLink>
-			<h:form>
-				<p:commandLink action="#{loginBean.logout}" value="Logout"
-					type="submit" />
-			</h:form>
-		</b:container>
+		</b:navbarLinks>
 		<h:form styleClass="navbar-form navbar-right"
 			rendered="#{not loginBean.isConnected}">
 			<div class="form-group">
@@ -42,7 +43,7 @@
 					fieldSize="sm" value="#{loginBean.user.hashPassword}" />
 			</div>
 			<b:commandButton action="#{loginBean.login}" value="Sign in"
-				look="success" icon="chevron-right" iconAlign="right" />
+				look="primary" icon="chevron-right" iconAlign="right" />
 		</h:form>
 
 	</b:navBar>
