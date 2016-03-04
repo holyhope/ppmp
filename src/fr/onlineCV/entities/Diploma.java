@@ -30,7 +30,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Diploma.findAll", query = "SELECT d FROM Diploma d"),
     @NamedQuery(name = "Diploma.findById", query = "SELECT d FROM Diploma d WHERE d.id = :id"),
     @NamedQuery(name = "Diploma.findByLabel", query = "SELECT d FROM Diploma d WHERE d.label = :label"),
-    @NamedQuery(name = "Diploma.findBySpecialization", query = "SELECT d FROM Diploma d WHERE d.specialization = :specialization")})
+    @NamedQuery(name = "Diploma.findBySpecialization", query = "SELECT d FROM Diploma d WHERE d.specialization = :specialization"),
+    @NamedQuery(name = "Diploma.findByLabelLike", query = "SELECT d FROM Diploma d WHERE d.label LIKE :label")})
 public class Diploma implements Serializable {
 
     private static final long serialVersionUID = 1L;
