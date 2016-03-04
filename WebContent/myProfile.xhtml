@@ -16,160 +16,407 @@
 	<ui:define name="title">Profile of #{loginBean.user.firstName} #{loginBean.user.lastName}</ui:define>
 
 	<ui:define name="content">
-		<p>Welcome to your profile #{loginBean.user.firstName}
-			#{loginBean.user.lastName}</p>
-		<b:container id="displayUser">
-			<b:row>
-				<b:column span="1">
-					<p:outputLabel value="First Name" for="oFirstName" />
-				</b:column>
-				<b:column span="3">
-					<h:outputText id="oFirstName"
-						value="#{displayUsersBean.user.firstName}" />
-				</b:column>
-			</b:row>
-			<b:row>
-				<b:column span="1">
-					<p:outputLabel value="Last Name" for="oLastName" />
-				</b:column>
-				<b:column span="3">
-					<h:outputText id="oLastName"
-						value="#{displayUsersBean.user.lastName}" />
-				</b:column>
-			</b:row>
-			<b:row>
-				<b:column span="1">
-					<p:outputLabel value="Email" for="oEmail" />
-				</b:column>
-				<b:column span="3">
-					<h:outputText id="oEmail" value="#{displayUsersBean.user.email}" />
-				</b:column>
-			</b:row>
-			<b:row>
-				<b:column span="1">
-					<p:outputLabel value="Birthday" for="oBirthday" />
-				</b:column>
-				<b:column span="3">
-					<h:outputText id="oBirthday"
-						value="#{displayUsersBean.user.birthdate}" />
-				</b:column>
-			</b:row>
-			<b:row>
-				<b:column span="1">
-					<p:outputLabel value="Skills" />
-				</b:column>
-				<ui:repeat value="#{displayUsersBean.user.skillList}"
-					var="skillList">
-					<b:column span="2">
-						<h:outputText value="#{skillList.label}" />
-					</b:column>
-				</ui:repeat>
-			</b:row>
-			<b:row>
-				<b:column span="1">
-					<p:outputLabel value="Hobbies" />
-				</b:column>
-				<ui:repeat value="#{displayUsersBean.user.hobbyList}"
-					var="hobbyList">
-					<b:column span="2">
-						<h:outputText value="#{hobbyList.label}" />
-					</b:column>
-				</ui:repeat>
-			</b:row>
-			<b:row>
-				<b:column span="1">
-					<p:outputLabel value="Experiences" />
-				</b:column>
-				<ui:repeat value="#{displayUsersBean.user.experiencesList}"
-					var="experiencesList">
-					<b:column span="1">
-						<p:outputLabel value="CompanyLabel" for="CompanyLabel" />
-					</b:column>
-					<b:column span="1">
-						<h:outputText id="CompanyLabel"
-							value="#{experiencesList.company.label}" />
-					</b:column>
-					<b:column span="1">
-						<p:outputLabel value="experienceLabel" for="experienceLabel" />
-					</b:column>
-					<b:column span="1">
-						<h:outputText id="experienceLabel"
-							value="#{experiencesList.label}" />
-					</b:column>
-					<b:column span="1">
-						<p:outputLabel value="yearSart" for="yearStart" />
-					</b:column>
-					<b:column span="1">
-						<h:outputText id="yearStart" value="#{experiencesList.yearStart}" />
-					</b:column>
 
-				</ui:repeat>
-			</b:row>
+		<b:container>
+			<p></p>
+			<b:panel look="primary" id="displayUser" collapsible="false">
+				<f:facet name="heading">
+					<h:outputText value="Your profile" />
+				</f:facet>
+				<b:row>
+					<h:form>
+						<b:column span="1">
+							<p:outputLabel value="First Name" for="oFirstName" />
+						</b:column>
+						<b:column span="3">
+
+							<p:inplace id="oFirstName" editor="true">
+								<p:ajax event="save" listener="#{displayUsersBean.saveChanges}"></p:ajax>
+								<p:inputText value="#{displayUsersBean.user.firstName}"
+									required="true" label="text" />
+							</p:inplace>
+
+							<!--  <h:outputText id="oFirstName"
+							value="#{displayUsersBean.user.firstName}" />-->
+						</b:column>
+					</h:form>
+				</b:row>
+				<b:row>
+					<h:form>
+						<b:column span="1">
+							<p:outputLabel value="Last Name" for="oLastName" />
+						</b:column>
+						<b:column span="3">
+							<p:inplace id="oLastName" editor="true">
+								<p:ajax event="save" listener="#{displayUsersBean.saveChanges}"></p:ajax>
+								<p:inputText value="#{displayUsersBean.user.lastName}"
+									required="true" label="text" />
+							</p:inplace>
+						</b:column>
+					</h:form>
+				</b:row>
+				<b:row>
+					<h:form>
+						<b:column span="1">
+							<p:outputLabel value="Email" for="oEmail" />
+						</b:column>
+						<b:column span="3">
+							<p:inplace id="oEmail" editor="true">
+								<p:ajax event="save" listener="#{displayUsersBean.saveChanges}"></p:ajax>
+								<p:inputText value="#{displayUsersBean.user.email}"
+									required="true" label="text" />
+							</p:inplace>
+
+						</b:column>
+					</h:form>
+				</b:row>
+				<b:row>
+					<h:form>
+						<b:column span="1">
+							<p:outputLabel value="Birthday" for="oBirthday" />
+						</b:column>
+						<b:column span="3">
+							<p:inplace id="oBirthday" editor="true">
+								<p:ajax event="save" listener="#{displayUsersBean.saveChanges}"></p:ajax>
+								<p:calendar value="#{displayUsersBean.user.birthdate}"
+									pattern="dd/MM/yyyy" mask="true">
+									<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+								</p:calendar>
+							</p:inplace>
+
+						</b:column>
+					</h:form>
+				</b:row>
+				<b:row>
+					<b:column span="4">
+						<b:panel collapsible="false">
+							<f:facet name="heading">
+								<b:row>
+									<b:column span="6">
+										<h:outputText value="Skills" />
+									</b:column>
+									<b:column span="6">
+										<h:form styleClass="navbar-form navbar-right">
+											<b:commandButton value="Edit"
+												actionListener="#{displayUsersBean.modifySkill}"
+												update="skill-form" look="warning" size="sm" />
+										</h:form>
+									</b:column>
+								</b:row>
+							</f:facet>
+							<h:form id="skill-form">
+
+								<ui:repeat value="#{displayUsersBean.user.skillList}"
+									var="skillList">
+									<b:row>
+										<b:column span="9">
+											<h:outputText value="- #{skillList.label}" />
+										</b:column>
+										<b:column span="1">
+											<b:commandButton
+												rendered="#{displayUsersBean.showDeleteButton}"
+												value="Remove" look="danger" size="sm"
+												action="#{insertKnowBean.deleteSkill}" update="skill-form">
+												<f:setPropertyActionListener
+													target="#{insertKnowBean.skill.label}"
+													value="#{skillList.label}" />
+
+											</b:commandButton>
+										</b:column>
+									</b:row>
+								</ui:repeat>
+							</h:form>
+						</b:panel>
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column span="4">
+						<b:panel collapsible="false">
+							<f:facet name="heading">
+								<b:row>
+									<b:column span="6">
+										<h:outputText value="Hobbies" />
+									</b:column>
+									<b:column span="6">
+										<h:form styleClass="navbar-form navbar-right">
+											<b:commandButton value="Edit"
+												actionListener="#{displayUsersBean.modifyHobby}"
+												update="hobbies-form" look="warning" size="sm" />
+										</h:form>
+									</b:column>
+								</b:row>
+							</f:facet>
+							<h:form id="hobbies-form">
+
+								<ui:repeat value="#{displayUsersBean.user.hobbyList}"
+									var="hobbyList">
+									<b:row>
+										<b:column span="9">
+											<h:outputText value="- #{hobbyList.label}" />
+										</b:column>
+										<b:column span="1">
+
+											<b:commandButton
+												rendered="#{displayUsersBean.showDeleteButtonHobby}"
+												value="Remove" look="danger" size="sm"
+												action="#{insertPracticeBean.deleteHobby}"
+												update="hobbies-form">
+												<f:setPropertyActionListener
+													target="#{insertPracticeBean.hobby.label}"
+													value="#{hobbyList.label}" />
+											</b:commandButton>
+										</b:column>
+									</b:row>
+								</ui:repeat>
+							</h:form>
+						</b:panel>
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column span="6">
+						<b:panel collapsible="false">
+							<f:facet name="heading">
+								<b:row>
+									<b:column span="6">
+										<h:outputText value="Experiences" />
+									</b:column>
+									<b:column span="6">
+										<h:form styleClass="navbar-form navbar-right">
+											<b:commandButton value="Edit"
+												actionListener="#{displayUsersBean.modifyExperiences}"
+												update="experiences-form" look="warning" size="sm" />
+										</h:form>
+									</b:column>
+								</b:row>
+							</f:facet>
+							<h:form id="experiences-form">
+								<ui:repeat value="#{displayUsersBean.user.experiencesList}"
+									var="experiencesList">
+									<b:row>
+										<b:column span="9">
+											<b:panel collapsible="false">
+												<f:facet name="heading">
+													<b:row>
+														<b:column span="12">
+
+															<h:outputText id="CompanyLabel"
+																value="#{experiencesList.company.label}" />
+														</b:column>
+													</b:row>
+												</f:facet>
+												<b:row>
+													<b:column span="9">
+														<p:outputLabel value="experienceLabel"
+															for="experienceLabel" />
+													</b:column>
+													<b:column span="1">
+														<h:outputText id="experienceLabel"
+															value="#{experiencesList.label}" />
+													</b:column>
+												</b:row>
+												<b:row>
+													<b:column span="9">
+														<p:outputLabel value="yearSart" for="yearStart" />
+													</b:column>
+													<b:column span="1">
+														<h:outputText id="yearStart"
+															value="#{experiencesList.yearStart}">
+															<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+														</h:outputText>
+													</b:column>
+												</b:row>
+
+											</b:panel>
+										</b:column>
+										<b:column span="1">
+											<b:commandButton
+												rendered="#{displayUsersBean.showDeleteButtonExperiences}"
+												value="Remove" look="danger" size="sm"
+												action="#{insertExperienceBean.deleteExperience}"
+												update="experiences-form">
+												<f:setPropertyActionListener
+													target="#{insertExperienceBean.experiences.label}"
+													value="#{experiencesList.label}" />
+											</b:commandButton>
+										</b:column>
+									</b:row>
+								</ui:repeat>
+							</h:form>
+						</b:panel>
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column span="6">
+						<b:panel collapsible="false">
+							<f:facet name="heading">
+								<b:row>
+									<b:column span="6">
+										<h:outputText value="Diplomas" />
+									</b:column>
+									<b:column span="6">
+										<h:form styleClass="navbar-form navbar-right">
+											<b:commandButton value="Edit"
+												actionListener="#{displayUsersBean.modifyDiploma}"
+												update="diploma-form" look="warning" size="sm" />
+										</h:form>
+									</b:column>
+								</b:row>
+							</f:facet>
+							<h:form id="diploma-form">
+								<ui:repeat value="#{displayUsersBean.user.obtainList}"
+									var="obtainList">
+
+									<b:row>
+										<b:column span="9">
+											<b:panel collapsible="false">
+												<f:facet name="heading">
+													<b:row>
+														<b:column span="12">
+
+															<h:outputText id="DiplomaLabel"
+																value="#{obtainList.diploma.label}" />
+														</b:column>
+													</b:row>
+												</f:facet>
+												<b:row>
+													<b:column span="6">
+														<p:outputLabel value="School" for="schoolLabel" />
+													</b:column>
+													<b:column span="3">
+														<h:outputText id="schoolLabel"
+															value="#{obtainList.school.label}" />
+													</b:column>
+												</b:row>
+												<b:row>
+													<b:column span="9">
+														<p:outputLabel value="Obtain year" for="obtainYear" />
+													</b:column>
+													<b:column span="1">
+														<h:outputText id="obtainYear" value="#{obtainList.year}">
+															<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+														</h:outputText>
+													</b:column>
+												</b:row>
+
+											</b:panel>
+										</b:column>
+										<b:column span="1">
+											<b:commandButton
+												rendered="#{displayUsersBean.showDeleteButtonDiploma}"
+												value="Remove" look="danger" size="sm"
+												action="#{insertObtainBean.deleteDiploma(obtainList.school.label, obtainList.diploma.label)}"
+												update="diploma-form" />
+										</b:column>
+									</b:row>
+
+								</ui:repeat>
+							</h:form>
+						</b:panel>
+					</b:column>
+				</b:row>
+			</b:panel>
 		</b:container>
 		<b:container>
 			<h3 style="margin-top: 0">Add something</h3>
-			<p:tabView>
-				<p:tab title="Add new Experience">
-					<h:form>
-						<p:growl id="msgs" showDetail="true" />
-						<h:panelGrid columns="2" cellpadding="5">
-							<p:outputLabel value="Company" for="acCompany" />
-							<p:autoComplete id="acCompany" forceSelection="true"
-								value="#{insertExperienceBean.company.label}"
-								completeMethod="#{autoCompleteBean.completeTextCompany}" />
-							<p:outputLabel value="Label" for="iLabel" />
-							<p:inputText id="iLabel"
-								value="#{insertExperienceBean.experiences.label}" />
-							<p:outputLabel value="Description" for="iDescription" />
-							<p:inputTextarea id="iDescription" rows="6" cols="20"
-								value="#{insertExperienceBean.experiences.description}" />
-							<p:outputLabel for="iDate" value="Year Start" />
-							<p:calendar id="iDate"
-								value="#{insertExperienceBean.experiences.yearStart}"
-								pattern="dd/MM/yyyy" mask="99/99/9999" />
-							<p:outputLabel for="iDate2" value="Year End" />
-							<p:calendar id="iDate2"
-								value="#{insertExperienceBean.experiences.yearEnd}"
-								pattern="dd/MM/yyyy" mask="99/99/9999" />
-							<p:commandButton value="Add experience" id="addExperience"
-								update="msgs"
-								actionListener="#{insertExperienceBean.addExperience}"
-								styleClass="ui-priority-primary" ajax="false" />
-						</h:panelGrid>
-					</h:form>
-				</p:tab>
-				<p:tab title="Add new Skill">
-					<h:form>
-						<p:growl id="msgs" showDetail="true" />
-						<h:panelGrid columns="2" cellpadding="5">
-							<p:outputLabel value="Skill" for="acSkill" />
-							<p:autoComplete id="acSkill" forceSelection="true"
-								value="#{insertKnowBean.skillListLabel}"
-								completeMethod="#{autoCompleteBean.completeTextSkill}"
-								maxResults="10" multiple="true" />
-							<p:commandButton value="Add Skill" id="addSkill" update="msgs"
-								actionListener="#{insertKnowBean.addSkill}"
-								styleClass="ui-priority-primary" />
-						</h:panelGrid>
-					</h:form>
-				</p:tab>
-				<p:tab title="Add new Hobby">
-					<h:form>
-						<p:growl id="msgs" showDetail="true" />
-						<h:panelGrid columns="2" cellpadding="5">
-							<p:outputLabel value="Hobby" for="acHobby" />
-							<p:autoComplete id="acHobby" forceSelection="true"
-								value="#{insertPracticeBean.hobbyListLabel}"
-								completeMethod="#{autoCompleteBean.completeTextHobby}"
-								maxResults="10" multiple="true" />
-							<p:commandButton value="Add Hobby" id="addHobby" update="msgs"
-								actionListener="#{insertPracticeBean.addHobby}"
-								styleClass="ui-priority-primary" />
-						</h:panelGrid>
-					</h:form>
-				</p:tab>
-			</p:tabView>
-
+			<b:tabView>
+				<b:tab title="Add new Experience">
+					<div class="ui-fluid">
+						<h:form>
+							<p:panelGrid columns="2"
+								columnClasses="ui-grid-col-2,ui-grid-col-10"
+								styleClass="ui-panelgrid-blank">
+								<h:outputLabel value="Company" for="acCompany" />
+								<p:autoComplete id="acCompany" forceSelection="true"
+									value="#{insertExperienceBean.company.label}"
+									completeMethod="#{autoCompleteBean.completeTextCompany}" />
+								<h:outputLabel value="Label" for="iLabel" />
+								<p:inputText id="iLabel"
+									value="#{insertExperienceBean.experiences.label}" />
+								<h:outputLabel value="Description" for="iDescription" />
+								<p:inputTextarea id="iDescription" rows="6" cols="20"
+									value="#{insertExperienceBean.experiences.description}" />
+								<h:outputLabel for="iDate" value="Year Start" />
+								<p:calendar id="iDate"
+									value="#{insertExperienceBean.experiences.yearStart}"
+									pattern="dd/MM/yyyy" mask="99/99/9999" />
+								<h:outputLabel for="iDate2" value="Year End" />
+								<p:calendar id="iDate2"
+									value="#{insertExperienceBean.experiences.yearEnd}"
+									pattern="dd/MM/yyyy" mask="99/99/9999" />
+								<p:commandButton value="Add experience" id="addExperience"
+									actionListener="#{insertExperienceBean.addExperience}"
+									styleClass="ui-priority-primary" update="displayUser" />
+							</p:panelGrid>
+						</h:form>
+					</div>
+				</b:tab>
+				<b:tab title="Add new Skill">
+					<div class="ui-fluid">
+						<h:form>
+							<p:growl id="msgs" showDetail="true" />
+							<p:panelGrid columns="2"
+								columnClasses="ui-grid-col-1,ui-grid-col-9"
+								styleClass="ui-panelgrid-blank">
+								<p:outputLabel value="Skill" for="acSkill" />
+								<p:autoComplete id="acSkill" forceSelection="true"
+									value="#{insertKnowBean.skillListLabel}"
+									completeMethod="#{autoCompleteBean.completeTextSkill}"
+									maxResults="10" multiple="true" />
+								<p:commandButton value="Add Skill" id="addSkill"
+									action="#{insertKnowBean.addSkill}"
+									styleClass="ui-priority-primary" update="displayUser" />
+							</p:panelGrid>
+						</h:form>
+					</div>
+				</b:tab>
+				<b:tab title="Add new Hobby">
+					<div class="ui-fluid">
+						<h:form id="new-hobby">
+							<p:growl id="msgs" showDetail="true" />
+							<p:panelGrid columns="2"
+								columnClasses="ui-grid-col-1,ui-grid-col-9"
+								styleClass="ui-panelgrid-blank">
+								<p:outputLabel value="Hobby" for="acHobby" />
+								<p:autoComplete id="acHobby" forceSelection="true"
+									placeholder="" value="#{insertPracticeBean.hobbyListLabel}"
+									completeMethod="#{autoCompleteBean.completeTextHobby}"
+									maxResults="10" multiple="true" resetValues="true" />
+								<p:commandButton value="Add Hobby" id="addHobby"
+									update="displayUser, new-hobby"
+									actionListener="#{insertPracticeBean.addHobby}"
+									resetValues="true" styleClass="ui-priority-primary">
+								</p:commandButton>
+							</p:panelGrid>
+						</h:form>
+					</div>
+				</b:tab>
+				<b:tab title="Add new Diploma">
+					<div class="ui-fluid">
+						<h:form>
+							<p:panelGrid columns="2"
+								columnClasses="ui-grid-col-2,ui-grid-col-10"
+								styleClass="ui-panelgrid-blank">
+								<p:outputLabel value="School" for="acSchool" />
+								<p:autoComplete id="acSchool" forceSelection="true"
+									value="#{insertObtainBean.school.label}"
+									completeMethod="#{autoCompleteBean.completeTextSchool}"
+									maxResults="10" />
+								<p:outputLabel value="Diploma" for="acDiploma" />
+								<p:autoComplete id="acDiploma" forceSelection="true"
+									value="#{insertObtainBean.diploma.label}"
+									completeMethod="#{autoCompleteBean.completeTextDiploma}"
+									maxResults="10" />
+								<h:outputLabel for="iDate" value="Obtain Year" />
+								<p:calendar id="iDate" value="#{insertObtainBean.obtain.year}"
+									pattern="dd/MM/yyyy" mask="99/99/9999" />
+								<p:commandButton value="Add Diploma" id="addDiploma"
+									actionListener="#{insertObtainBean.addDiploma}"
+									update="displayUser" styleClass="ui-priority-primary" />
+							</p:panelGrid>
+						</h:form>
+					</div>
+				</b:tab>
+			</b:tabView>
 		</b:container>
 	</ui:define>
 </ui:composition>
