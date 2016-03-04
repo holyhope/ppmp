@@ -9,7 +9,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import fr.onlineCV.dao.CompanyDAO;
+import fr.onlineCV.dao.DiplomaDAO;
 import fr.onlineCV.dao.HobbyDAO;
+import fr.onlineCV.dao.SchoolDAO;
 import fr.onlineCV.dao.SkillDAO;
 import fr.onlineCV.entities.Company;
 
@@ -20,7 +22,6 @@ public class AutoCompleteBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private List<Company> companies;
-	private String txt5;
 
 	@EJB
 	private CompanyDAO companyDao;
@@ -28,6 +29,10 @@ public class AutoCompleteBean implements Serializable {
 	private SkillDAO skillDao;
 	@EJB
 	private HobbyDAO hobbyDao;
+	@EJB
+	private SchoolDAO schoolDao;
+	@EJB
+	private DiplomaDAO diplomaDao;
 
 	public AutoCompleteBean() {
 		companies = new ArrayList<>();
@@ -50,17 +55,21 @@ public class AutoCompleteBean implements Serializable {
 		hobbyDao.findByLabelLike(query).stream().forEach(x->result.add(x.getLabel()));
 		return result;
 	}
+	
+	public List<String> completeTextSchool(String query){
+		List<String> result = new ArrayList<>();
+		schoolDao.findByLabelLike(query).stream().forEach(x->result.add(x.getLabel()));
+		return result;
+	}
+	public List<String> completeTextDiploma(String query){
+		List<String> result = new ArrayList<>();
+		diplomaDao.findByLabelLike(query).stream().forEach(x->result.add(x.getLabel()));
+		return result;
+	}
 
 	public List<Company> getCompanies() {
 		return companies;
 	}
 	
-	public String getTxt5(){
-		return txt5;
-	}
-	
-	public void setTxt5(String txt5){
-		this.txt5 = txt5;
-	}
 	
 }
