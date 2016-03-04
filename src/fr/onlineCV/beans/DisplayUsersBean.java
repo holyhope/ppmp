@@ -25,7 +25,9 @@ public class DisplayUsersBean implements Serializable {
 	
 	public void onPageLoad(){
 		user = (User) SessionBean.getSession().getAttribute(LoginBean.USER);
+		if(user != null){
 		user = userDao.find(user.getEmail());
+		}
 	}
 	
 	public void modifySkill(){
