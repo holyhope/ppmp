@@ -27,6 +27,7 @@ public class SkillDAO {
 		}
 		return skills;
 	}
+	
 
 	public Skill findByLabel(String label) {
 		TypedQuery<Skill> query = em.createNamedQuery("Skill.findByLabel", Skill.class);
