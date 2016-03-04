@@ -10,94 +10,192 @@
 	<ui:define name="title">Welcome #{loginBean.user.firstName} #{loginBean.user.lastName}</ui:define>
 
 	<ui:define name="content">
-			<b:container id="displayUser">
-			<b:row>
-				<b:column span="1">
-					<p:outputLabel value="First Name" for="oFirstName" />
-				</b:column>
-				<b:column span="3">
-					<h:outputText id="oFirstName"
-						value="#{searchBean.user.firstName}" />
-				</b:column>
-			</b:row>
-			<b:row>
-				<b:column span="1">
-					<p:outputLabel value="Last Name" for="oLastName" />
-				</b:column>
-				<b:column span="3">
-					<h:outputText id="oLastName"
-						value="#{searchBean.user.lastName}" />
-				</b:column>
-			</b:row>
-			<b:row rendered="#{searchBean.isMyProfile}">
-				<b:column span="1">
-					<p:outputLabel value="Email" for="oEmail" />
-				</b:column>
-				<b:column span="3">
-					<h:outputText id="oEmail" value="#{searchBean.user.email}" />
-				</b:column>
-			</b:row>
-			<b:row>
-				<b:column span="1">
-					<p:outputLabel value="Birthday" for="oBirthday" />
-				</b:column>
-				<b:column span="3">
-					<h:outputText id="oBirthday"
-						value="#{searchBean.user.birthdate}" />
-				</b:column>
-			</b:row>
-			<b:row>
-				<b:column span="1">
-					<p:outputLabel value="Skills" />
-				</b:column>
-				<ui:repeat value="#{searchBean.user.skillList}"
-					var="skillList">
-					<b:column span="2">
-						<h:outputText value="#{skillList.label}" />
-					</b:column>
-				</ui:repeat>
-			</b:row>
-			<b:row>
-				<b:column span="1">
-					<p:outputLabel value="Hobbies" />
-				</b:column>
-				<ui:repeat value="#{searchBean.user.hobbyList}"
-					var="hobbyList">
-					<b:column span="2">
-						<h:outputText value="#{hobbyList.label}" />
-					</b:column>
-				</ui:repeat>
-			</b:row>
-			<b:row>
-				<b:column span="1">
-					<p:outputLabel value="Experiences" />
-				</b:column>
-				<ui:repeat value="#{searchBean.user.experiencesList}"
-					var="experiencesList">
+		<b:container>
+			<p></p>
+			<b:panel look="primary" id="displayUser" collapsible="false">
+				<f:facet name="heading">
+					<h:outputText
+						value="Profile : #{searchBean.user.firstName} #{searchBean.user.lastName}" />
+				</f:facet>
+				<b:row>
 					<b:column span="1">
-						<p:outputLabel value="CompanyLabel" for="CompanyLabel" />
+						<p:outputLabel value="First Name" for="oFirstName" />
 					</b:column>
+					<b:column span="3">
+						<h:outputText id="oFirstName" value="#{searchBean.user.firstName}"
+							required="true" label="text" />
+					</b:column>
+				</b:row>
+				<b:row>
 					<b:column span="1">
-						<h:outputText id="CompanyLabel"
-							value="#{experiencesList.company.label}" />
+						<p:outputLabel value="Last Name" for="oLastName" />
 					</b:column>
+					<b:column span="3">
+						<h:outputText id="oLastName" value="#{searchBean.user.lastName}"
+							required="true" label="text" />
+					</b:column>
+				</b:row>
+				<b:row rendered="#{searchBean.isMyProfile}">
 					<b:column span="1">
-						<p:outputLabel value="experienceLabel" for="experienceLabel" />
+						<p:outputLabel value="Email" for="oEmail" />
 					</b:column>
+					<b:column span="3">
+						<h:outputText id="oEmail" value="#{searchBean.user.email}" />
+					</b:column>
+				</b:row>
+				<b:row>
 					<b:column span="1">
-						<h:outputText id="experienceLabel"
-							value="#{experiencesList.label}" />
+						<p:outputLabel value="Birthday" for="oBirthday" />
 					</b:column>
-					<b:column span="1">
-						<p:outputLabel value="yearSart" for="yearStart" />
+					<b:column span="3">
+						<h:outputText id="oBirthday" value="#{searchBean.user.birthdate}">
+							<f:convertDateTime type="date" pattern="dd MMMM yyyy" />
+						</h:outputText>
 					</b:column>
-					<b:column span="1">
-						<h:outputText id="yearStart" value="#{experiencesList.yearStart}" />
+				</b:row>
+				<b:row>
+					<b:column span="4">
+						<b:panel collapsible="false">
+							<f:facet name="heading">
+								<b:row>
+									<b:column span="6">
+										<h:outputText value="Skills" />
+									</b:column>
+								</b:row>
+							</f:facet>
+							<ui:repeat value="#{searchBean.user.skillList}" var="skillList">
+								<b:row>
+									<b:column span="9">
+										<h:outputText value="- #{skillList.label}" />
+									</b:column>
+								</b:row>
+							</ui:repeat>
+						</b:panel>
 					</b:column>
+				</b:row>
+				<b:row>
+					<b:column span="4">
+						<b:panel collapsible="false">
+							<f:facet name="heading">
+								<b:row>
+									<b:column span="6">
+										<h:outputText value="Hobbies" />
+									</b:column>
+								</b:row>
+							</f:facet>
+							<ui:repeat value="#{searchBean.user.hobbyList}" var="hobbyList">
+								<b:row>
+									<b:column span="9">
+										<h:outputText value="- #{hobbyList.label}" />
+									</b:column>
+								</b:row>
+							</ui:repeat>
+						</b:panel>
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column span="6">
+						<b:panel collapsible="false">
+							<f:facet name="heading">
+								<b:row>
+									<b:column span="6">
+										<h:outputText value="Experiences" />
+									</b:column>
+								</b:row>
+							</f:facet>
+							<ui:repeat value="#{searchBean.user.experiencesList}"
+								var="experiencesList">
+								<b:row>
+									<b:column span="9">
+										<b:panel collapsible="false">
+											<f:facet name="heading">
+												<b:row>
+													<b:column span="12">
+														<h:outputText id="CompanyLabel"
+															value="#{experiencesList.company.label}" />
+													</b:column>
+												</b:row>
+											</f:facet>
+											<b:row>
+												<b:column span="9">
+													<p:outputLabel value="experienceLabel"
+														for="experienceLabel" />
+												</b:column>
+												<b:column span="1">
+													<h:outputText id="experienceLabel"
+														value="#{experiencesList.label}" />
+												</b:column>
+											</b:row>
+											<b:row>
+												<b:column span="9">
+													<p:outputLabel value="yearSart" for="yearStart" />
+												</b:column>
+												<b:column span="1">
+													<h:outputText id="yearStart"
+														value="#{experiencesList.yearStart}">
+														<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+													</h:outputText>
+												</b:column>
+											</b:row>
+										</b:panel>
+									</b:column>
+								</b:row>
+							</ui:repeat>
+						</b:panel>
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column span="6">
+						<b:panel collapsible="false">
+							<f:facet name="heading">
+								<b:row>
+									<b:column span="6">
+										<h:outputText value="Diplomas" />
+									</b:column>
+								</b:row>
+							</f:facet>
+							<ui:repeat value="#{searchBean.user.obtainList}" var="obtainList">
 
-				</ui:repeat>
-			</b:row>
-			</b:container>
+								<b:row>
+									<b:column span="9">
+										<b:panel collapsible="false">
+											<f:facet name="heading">
+												<b:row>
+													<b:column span="12">
+
+														<h:outputText id="DiplomaLabel"
+															value="#{obtainList.diploma.label}" />
+													</b:column>
+												</b:row>
+											</f:facet>
+											<b:row>
+												<b:column span="6">
+													<p:outputLabel value="School" for="schoolLabel" />
+												</b:column>
+												<b:column span="3">
+													<h:outputText id="schoolLabel"
+														value="#{obtainList.school.label}" />
+												</b:column>
+											</b:row>
+											<b:row>
+												<b:column span="9">
+													<p:outputLabel value="Obtain year" for="obtainYear" />
+												</b:column>
+												<b:column span="1">
+													<h:outputText id="obtainYear" value="#{obtainList.year}">
+														<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+													</h:outputText>
+												</b:column>
+											</b:row>
+										</b:panel>
+									</b:column>
+								</b:row>
+							</ui:repeat>
+						</b:panel>
+					</b:column>
+				</b:row>
+			</b:panel>
+		</b:container>
 	</ui:define>
 
 </ui:composition>
