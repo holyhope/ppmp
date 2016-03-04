@@ -43,9 +43,24 @@ public class InsertPracticeBean {
 		hobbyListLabel.stream().forEach(x -> hobbyList.add(hobbyDao.findByLabel(x)));
 		user.setHobbyList(hobbyList);
 		usersDao.update(user);
-		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-	    ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
+		FacesContext fctx = FacesContext.getCurrentInstance();
+		DisplayUsersBean displayUsersBean = fctx.getApplication().evaluateExpressionGet(fctx , "#{displayUsersBean}", DisplayUsersBean.class);
+		displayUsersBean.onPageLoad();
 	}
+	public void deleteHobby() throws IOException{
+		user = (User) SessionBean.getSession().getAttribute(LoginBean.USER);
+		user = usersDao.find(user.getEmail());
+		final List<Hobby> hobbyList = user.getHobbyList();
+		hobbyList.removeIf(x-> x.getLabel().equals(hobby.getLabel()));
+		user.setHobbyList(hobbyList);
+		usersDao.update(user);
+		FacesContext fctx = FacesContext.getCurrentInstance();
+		DisplayUsersBean displayUsersBean = fctx.getApplication().evaluateExpressionGet(fctx , "#{displayUsersBean}", DisplayUsersBean.class);
+		displayUsersBean.onPageLoad();
+		//ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+	    //ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
+	}
+	
 
 	public User getUser() {
 		return user;

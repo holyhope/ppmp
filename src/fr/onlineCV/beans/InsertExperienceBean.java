@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
@@ -57,11 +56,25 @@ public class InsertExperienceBean implements Serializable {
 		List<Experiences> experiencesList = user.getExperiencesList();
 		experiencesList.add(experiences);
 		user.setExperiencesList(experiencesList);
-		FacesMessage message = new FacesMessage("experiences created");
-		FacesContext.getCurrentInstance().addMessage(null, message);
-		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-	    ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
+		usersDao.update(user);
 		
+		FacesContext fctx = FacesContext.getCurrentInstance();
+		DisplayUsersBean displayUsersBean = fctx.getApplication().evaluateExpressionGet(fctx , "#{displayUsersBean}", DisplayUsersBean.class);
+		displayUsersBean.onPageLoad();
+		
+	}
+	
+	public void deleteExperience() throws IOException{
+		user = (User) SessionBean.getSession().getAttribute(LoginBean.USER);
+		user = usersDao.find(user.getEmail());
+		List<Experiences> experiencesList = user.getExperiencesList();
+		experiencesList.removeIf(x -> x.getLabel().equals(experiences.getLabel()));
+		user.setExperiencesList(experiencesList);
+		usersDao.update(user);
+		
+		FacesContext fctx = FacesContext.getCurrentInstance();
+		DisplayUsersBean displayUsersBean = fctx.getApplication().evaluateExpressionGet(fctx , "#{displayUsersBean}", DisplayUsersBean.class);
+		displayUsersBean.onPageLoad();
 	}
 
 	public Company getCompany() {
@@ -87,7 +100,4 @@ public class InsertExperienceBean implements Serializable {
 	public void setExperiences(Experiences experiences) {
 		this.experiences = experiences;
 	}
-	
-	
-
 }

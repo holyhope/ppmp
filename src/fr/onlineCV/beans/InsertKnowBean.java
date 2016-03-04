@@ -43,8 +43,22 @@ public class InsertKnowBean {
 		skillListLabel.stream().forEach(x -> skillList.add(skillDao.findByLabel(x)));
 		user.setSkillList(skillList);
 		usersDao.update(user);
-		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-	    ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
+		FacesContext fctx = FacesContext.getCurrentInstance();
+		DisplayUsersBean displayUsersBean = fctx.getApplication().evaluateExpressionGet(fctx , "#{displayUsersBean}", DisplayUsersBean.class);
+		displayUsersBean.onPageLoad();
+	}
+	
+	public void deleteSkill() throws IOException{
+		user = (User) SessionBean.getSession().getAttribute(LoginBean.USER);
+		user = usersDao.find(user.getEmail());
+		final List<Skill> skillList = usersDao.find(user.getEmail()).getSkillList();
+		skillList.removeIf(x-> x.getLabel().equals(skill.getLabel()));
+		user.setSkillList(skillList);
+		usersDao.update(user);
+		FacesContext fctx = FacesContext.getCurrentInstance();
+		DisplayUsersBean displayUsersBean = fctx.getApplication().evaluateExpressionGet(fctx , "#{displayUsersBean}", DisplayUsersBean.class);
+		displayUsersBean.onPageLoad();
+		//user.getSkillList().removeIf(x-> x.getLabel().equals(skill.getLabel()));
 	}
 
 	public User getUser() {
