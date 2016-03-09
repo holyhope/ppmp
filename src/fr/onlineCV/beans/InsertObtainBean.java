@@ -3,7 +3,6 @@ package fr.onlineCV.beans;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -31,8 +30,6 @@ public class InsertObtainBean implements Serializable {
 	private Obtain obtain;
 	private Diploma diploma;
 	
-	private int count = 0;
-
 	@EJB
 	private SchoolDAO schoolDao;
 
@@ -66,12 +63,8 @@ public class InsertObtainBean implements Serializable {
 		obtainDao.create(obtain);
 		
 		List<Obtain> obtainList = user.getObtainList();
-		System.out.println("BEFORE");
 		obtainList.forEach(x -> System.out.println("school Id : " + x.getObtainPK().getIdSchool() + " diploma id : " + x.getObtainPK().getIdDiploma()));
 		obtainList.add(obtain);
-		System.out.println("AJOUT DE "+ "school Id : " + obtain.getObtainPK().getIdSchool() + " diploma id : " + obtain.getObtainPK().getIdDiploma());
-		System.out.println("AFTER");
-		obtainList.forEach(x -> System.out.println("school Id : " + x.getObtainPK().getIdSchool() + " diploma id : " + x.getObtainPK().getIdDiploma()));
 		user.setObtainList(obtainList);
 		usersDao.update(user);
 
