@@ -133,4 +133,36 @@ public class UsersDAO {
 		return users;
 		
 	}
+	
+	public List<User> findBySkill(String skillLabel){
+		List<User> users = new ArrayList<>();
+		
+		TypedQuery<User> query = em.createNamedQuery("User.findBySkill", User.class);
+		
+		query.setParameter("skillLabel", skillLabel );
+		
+		try{
+			
+			users = (List<User>) query.getResultList();
+		}catch(Exception e){
+			throw new DAOException(e);
+		}
+		return users;
+	}
+	
+	public List<User> findByHobby(String hobbyLabel){
+		List<User> users = new ArrayList<>();
+		
+		TypedQuery<User> query = em.createNamedQuery("User.findByHobby", User.class);
+		
+		query.setParameter("hobbyLabel", hobbyLabel );
+		
+		try{
+			
+			users = (List<User>) query.getResultList();
+		}catch(Exception e){
+			throw new DAOException(e);
+		}
+		return users;
+	}
 }
