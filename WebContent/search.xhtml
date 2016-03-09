@@ -14,26 +14,97 @@
 
 	<ui:define name="content">
 		<b:container>
-			<p:dataTable var="user" value="#{searchBean.users}">
-				<p:column rendered="False" headerText="Id">
-					<h:outputText value="#{user.id}" />
-				</p:column>
+			<br />
+			<b:panel look="primary" id="displayUser" collapsible="false">
+				<f:facet name="heading">
+					<h4>Users</h4>
+				</f:facet>
 
-				<p:column headerText="First Name">
-					<h:outputText value="#{user.firstName}" />
-				</p:column>
+				<h5>
+					Users who begin with <b>#{searchBean.searchRequest}</b>
+				</h5>
+				<p:dataTable var="user" value="#{searchBean.users}">
+					<p:column rendered="False" headerText="Id">
+						<h:outputText value="#{user.id}" />
+					</p:column>
+					<p:column headerText="First Name">
+						<h:outputText value="#{user.firstName}" />
+					</p:column>
+					<p:column headerText="Last Name">
+						<h:outputText value="#{user.lastName}" />
+					</p:column>
+					<p:column headerText="Show User">
+						<p:commandButton look="primary" action="#{searchBean.showUser}"
+							value="Show Profile">
+							<f:setPropertyActionListener target="#{searchBean.user.id}"
+								value="#{user.id}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</b:panel>
 
-				<p:column headerText="Last Name">
-					<h:outputText value="#{user.lastName}" />
-				</p:column>
-
-				<p:column headerText="Show User">
-					<p:commandButton look="primary" action="#{searchBean.showUser}" value="Show Profile">
-						<f:setPropertyActionListener target="#{searchBean.user.id}"
-							value="#{user.id}" />
-					</p:commandButton>
-				</p:column>
-			</p:dataTable>
+			<br />
+			<b:panel look="primary" collapsible="false">
+				<f:facet name="heading">
+					<h4>Skill</h4>
+				</f:facet>
+				<ui:repeat var="entry"
+					value="#{searchBean.searchSkillResult.entrySet().toArray()}">
+					<h5>
+						Users who know the skill : <b>#{entry.key.label}</b>
+					</h5>
+					<p:dataTable var="user" value="#{entry.value}">
+						<p:column rendered="False" headerText="Id">
+							<h:outputText value="#{user.id}" />
+						</p:column>
+						<p:column headerText="First Name">
+							<h:outputText value="#{user.firstName}" />
+						</p:column>
+						<p:column headerText="Last Name">
+							<h:outputText value="#{user.lastName}" />
+						</p:column>
+						<p:column headerText="Show User">
+							<p:commandButton look="primary" action="#{searchBean.showUser}"
+								value="Show Profile">
+								<f:setPropertyActionListener target="#{searchBean.user.id}"
+									value="#{user.id}" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+					<br />
+				</ui:repeat>
+			</b:panel>
+			<br />
+			<b:panel look="primary" collapsible="false">
+				<f:facet name="heading">
+					<h4>Hobby</h4>
+				</f:facet>
+				<ui:repeat var="entry"
+					value="#{searchBean.searchHobbyResult.entrySet().toArray()}">
+					<h5>
+						Users who practice the hobby : <b>#{entry.key.label}</b>
+					</h5>
+					<p:dataTable var="user" value="#{entry.value}">
+						<p:column rendered="False" headerText="Id">
+							<h:outputText value="#{user.id}" />
+						</p:column>
+						<p:column headerText="First Name">
+							<h:outputText value="#{user.firstName}" />
+						</p:column>
+						<p:column headerText="Last Name">
+							<h:outputText value="#{user.lastName}" />
+						</p:column>
+						<p:column headerText="Show User">
+							<p:commandButton look="primary" action="#{searchBean.showUser}"
+								value="Show Profile">
+								<f:setPropertyActionListener target="#{searchBean.user.id}"
+									value="#{user.id}" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+					<br />
+				</ui:repeat>
+			</b:panel>
 		</b:container>
 	</ui:define>
 </ui:composition>
