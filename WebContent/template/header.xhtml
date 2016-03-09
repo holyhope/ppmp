@@ -13,18 +13,18 @@
 			<b:navLink value="Sign Up" href="inscription.xhtml"></b:navLink>
 
 		</b:navbarLinks>
-		<h:form 
-			class="navbar-form navbar-left " role="search">
+		<h:form class="navbar-form navbar-left " role="search">
 			<div class="form-group">
 				<b:inputText type="text" class="form-control"
-					placeholder="Search..." value="#{searchBean.user.firstName}" />
+					placeholder="Search..." value="#{searchBean.searchRequest}" />
 			</div>
-			<b:commandButton action="#{searchBean.search}"
-				type="submit" look="primary" value="Submit" />
+			<b:commandButton action="#{searchBean.search}" type="submit"
+				look="primary" value="Submit" />
 		</h:form>
-		<h:form styleClass="navbar-form navbar-right" rendered="#{loginBean.isConnected}">
-			<b:commandButton look="info" action="#{loginBean.logout}" value="Logout"
-				type="submit" />
+		<h:form styleClass="navbar-form navbar-right"
+			rendered="#{loginBean.isConnected}">
+			<b:commandButton look="info" action="#{loginBean.logout}"
+				value="Logout" type="submit" />
 		</h:form>
 		<b:navbarLinks styleClass="navbar-right"
 			rendered="#{loginBean.isConnected}">
