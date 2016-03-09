@@ -8,7 +8,6 @@ import javax.faces.bean.RequestScoped;
 
 import fr.onlineCV.dao.HobbyDAO;
 import fr.onlineCV.entities.Hobby;
-import fr.onlineCV.entities.User;
 
 @ManagedBean
 @RequestScoped

@@ -37,7 +37,7 @@ public class SessionBean {
 	 */
 	public static boolean isConnected() {
 		try {
-			
+
 			Objects.requireNonNull(getSession().getAttribute(LoginBean.USER));
 			return true;
 		} catch (NullPointerException e) {
