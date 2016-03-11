@@ -105,10 +105,4 @@ public class Hobby implements Serializable {
 		}
 		return true;
 	}
-
-	@Override
-	public String toString() {
-		return "com.mycompany.mavenproject1.Hobby[ id=" + id + " ]";
-	}
-
 }

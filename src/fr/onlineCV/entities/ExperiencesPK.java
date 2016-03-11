@@ -74,11 +74,5 @@ public class ExperiencesPK implements Serializable {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.mycompany.mavenproject1.ExperiencesPK[ idUsers=" + idUsers + ", idCompany=" + idCompany + " ]";
-    }
-    
+    } 
 }

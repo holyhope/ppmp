@@ -49,7 +49,7 @@ import javax.xml.bind.annotation.XmlTransient;
 		@NamedQuery(name = "User.findByLastNameLike", query = "SELECT u FROM User u WHERE u.lastName LIKE :lastName"),
 		@NamedQuery(name = "User.findByFirstNameLike", query = "SELECT u FROM User u WHERE u.firstName LIKE :firstName"),
 		@NamedQuery(name = "User.findBySkill", query = "SELECT u FROM User u left JOIN u.skillList as s where s.label = :skillLabel"),
-		@NamedQuery(name = "User.findByHobby", query = "SELECT u FROM User u left JOIN u.hobbyList as h where h.label = :hobbyLabel")})
+		@NamedQuery(name = "User.findByHobby", query = "SELECT u FROM User u left JOIN u.hobbyList as h where h.label = :hobbyLabel") })
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -58,59 +58,59 @@ public class User implements Serializable {
 	@Basic(optional = false)
 	@Column(name = "id")
 	private Integer id;
-	
+
 	@Column(name = "last_name")
 	@NotNull(message = "{lastName.notNull}")
 	private String lastName;
-	
+
 	@Column(name = "first_name")
 	@NotNull(message = "{firstName.notNull}")
 	private String firstName;
-	
+
 	@Column(name = "birthdate")
 	@Temporal(TemporalType.DATE)
 	@NotNull(message = "{birthday.notNull}")
 	private Date birthdate;
-	
+
 	@Basic(optional = false)
 	@Column(name = "email")
 	@Pattern(regexp = "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)", message = "{email.pattern}")
 	@NotNull(message = "{email.notNull}")
 	private String email;
-	
+
 	@Basic(optional = false)
 	@Column(name = "hash_password")
 	@NotNull(message = "{password.notNull}")
 	@Size(min = 5, message = "{password.minSize}")
-	//@Convert(converter = PasswordConvert.class)
-		// @Converter( name = "passwordConverter", converterClass =
-		// PasswordConvert.class )
+	// @Convert(converter = PasswordConvert.class)
+	// @Converter( name = "passwordConverter", converterClass =
+	// PasswordConvert.class )
 	private String hashPassword;
-	
+
 	@Column(name = "photo_path")
 	private String photoPath;
-	
+
 	@JoinTable(name = "practice", joinColumns = {
 			@JoinColumn(name = "id_users", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "id_hobby", referencedColumnName = "id") })
 	@ManyToMany
 	private List<Hobby> hobbyList;
-	
+
 	@JoinTable(name = "know", joinColumns = {
 			@JoinColumn(name = "id_users", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "id_skill", referencedColumnName = "id") })
 	@ManyToMany
 	private List<Skill> skillList;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
 	private List<Obtain> obtainList;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
 	private List<Study> studyList;
-	
+
 	@OneToMany(mappedBy = "idUsers")
 	private List<Phone> phoneList;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
 	private List<Experiences> experiencesList;
 
@@ -257,10 +257,4 @@ public class User implements Serializable {
 		}
 		return true;
 	}
-
-	@Override
-	public String toString() {
-		return "com.mycompany.mavenproject1.Users[ id=" + id + " ]";
-	}
-
 }
