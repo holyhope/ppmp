@@ -3,8 +3,10 @@ package fr.onlineCV.beans;
 import java.io.Serializable;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import fr.onlineCV.dao.UsersDAO;
 import fr.onlineCV.entities.User;
@@ -70,6 +72,9 @@ public class DisplayUsersBean implements Serializable {
 	
 	public void saveChanges(){
 		userDao.update(user);
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effectuée",
+				"Information modifiée");
+		FacesContext.getCurrentInstance().addMessage("growl", message);
 	}
 
 	public User getUser() {
