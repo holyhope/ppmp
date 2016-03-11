@@ -61,6 +61,8 @@ public class SearchBean implements Serializable {
 		List<Skill> skillList = new ArrayList<>(); 
 		skillList = skillDao.findByLabelLike(searchRequest);
 		skillList.forEach(x -> searchSkillResult.put(x, userDao.findBySkill(x.getLabel())));
+		searchSkillResult.values().removeIf(x -> x == null || x.size() == 0);
+		
 	}
 	
 	public void searchByHobby() {
@@ -68,6 +70,7 @@ public class SearchBean implements Serializable {
 		List<Hobby> hobbyList = new ArrayList<>(); 
 		hobbyList = hobbyDao.findByLabelLike(searchRequest);
 		hobbyList.forEach(x -> searchHobbyResult.put(x, userDao.findByHobby(x.getLabel())));
+		searchHobbyResult.values().removeIf(x -> x == null || x.size() == 0);
 	}
 
 	public List<User> searchByLastName() {

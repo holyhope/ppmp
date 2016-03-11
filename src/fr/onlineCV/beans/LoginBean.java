@@ -34,8 +34,10 @@ public class LoginBean implements Serializable {
 		User userEmail = userDao.find(user.getEmail());
 
 		if (userEmail.getHashPassword().equals(PasswordConvert.hashPassword(user.getHashPassword()))) {
-			FacesMessage message = new FacesMessage("Succès de la connexion !");
-			FacesContext.getCurrentInstance().addMessage(null, message);
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Connexion", "Vous êtes maintentant connecté(e)");
+			FacesContext fctx = FacesContext.getCurrentInstance();
+	        fctx.getExternalContext().getFlash().setKeepMessages(true);
+			FacesContext.getCurrentInstance().addMessage("growl", message);
 			SessionBean.createSession().setAttribute(USER, userEmail);
 			user = userEmail;
 			isConnected = true;

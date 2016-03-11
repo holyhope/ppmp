@@ -2,9 +2,11 @@ package fr.onlineCV.beans;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -59,11 +61,13 @@ public class InsertObtainBean implements Serializable {
 		obtain.setSchool(school);
 		obtain.setDiploma(diploma);
 		obtain.setUsers(user);
-		obtain.setYear(this.obtain.getYear());
+		Calendar c = Calendar.getInstance();
+		c.setTime(this.obtain.getYear());
+		c.add(Calendar.DATE, 1);
+		obtain.setYear(c.getTime());
 		obtainDao.create(obtain);
 		
 		List<Obtain> obtainList = user.getObtainList();
-		obtainList.forEach(x -> System.out.println("school Id : " + x.getObtainPK().getIdSchool() + " diploma id : " + x.getObtainPK().getIdDiploma()));
 		obtainList.add(obtain);
 		user.setObtainList(obtainList);
 		usersDao.update(user);
@@ -71,26 +75,20 @@ public class InsertObtainBean implements Serializable {
 		FacesContext fctx = FacesContext.getCurrentInstance();
 		DisplayUsersBean displayUsersBean = fctx.getApplication().evaluateExpressionGet(fctx , "#{displayUsersBean}", DisplayUsersBean.class);
 		displayUsersBean.onPageLoad();
+		FacesMessage message = new FacesMessage( FacesMessage.SEVERITY_INFO, "Succès ajout du diplome", "Votre diplome a bien été ajouté" );
+        FacesContext.getCurrentInstance().addMessage("growl", message );
 	}
 
 	public void deleteDiploma(String schoolLabel, String diplomaLabel) throws IOException {
-		System.out.println("schoolLabel : " + schoolLabel + " diplomaLabel : " + diplomaLabel);
 
 		school = schoolDao.findByLabel(schoolLabel);
 		diploma = diplomaDao.findByLabel(diplomaLabel);
 		
 		user = (User) SessionBean.getSession().getAttribute(LoginBean.USER);
 		user = usersDao.find(user.getEmail());
-		//System.out.println("Obtain Diploma Id: " + obtain.getDiploma().getId());
-		//System.out.println(" Diploma Id : " + diploma.getId());
-		
+
 		List<Obtain> obtainList = user.getObtainList();
-		System.out.println(" Diploma Id : " + diploma.getId());
-		System.out.println(" School Id : " + school.getId());
-		System.out.println(" Users Id : " + user.getId());
-		System.out.println("TAILLE =" +obtainList.size());
-		
-		obtainList.forEach(x -> System.out.println("diploma id : " + x.getDiploma().getId() + " School id : " + x.getSchool().getId() + " user id : " + x.getUsers().getId()));
+	
 		obtainList.forEach(obtain -> {
 			if(obtain.getDiploma().getId().equals(diploma.getId())
 					&& obtain.getSchool().getId().equals(school.getId()) && obtain.getUsers().getId().equals(user.getId())){
@@ -100,12 +98,8 @@ public class InsertObtainBean implements Serializable {
 		});
 		if(obtain != null){
 		obtainList.remove(this.obtain);
-		System.out.println("obtain pk userid : " + obtain.getObtainPK().getIdUsers() + " school id : " + obtain.getObtainPK().getIdSchool() + " diploma id : " + obtain.getObtainPK().getIdDiploma());
 		obtainDao.delete(obtain);
 		}
-		/*obtainList.removeIf(obtain -> obtain.getDiploma().getId().equals(diploma.getId())
-				&& obtain.getSchool().getId().equals(school.getId()) && obtain.getUsers().getId().equals(user.getId()));
-		System.out.println("TAILLE 2 = " +obtainList.size());*/
 		user.setObtainList(obtainList);
 		usersDao.update(user);
 

@@ -18,7 +18,9 @@
 	<ui:define name="content">
 
 		<b:container>
-			<p></p>
+			<br/>
+			<h:outputStylesheet library="css" name="style.css"  />
+			<p:growl id="growl" showDetail="true" sticky="false" life="6000" /> 
 			<b:panel look="primary" id="displayUser" collapsible="false">
 				<f:facet name="heading">
 					<h:outputText value="Your profile" />
@@ -31,7 +33,7 @@
 						<b:column span="3">
 
 							<p:inplace id="oFirstName" editor="true">
-								<p:ajax event="save" listener="#{displayUsersBean.saveChanges}"></p:ajax>
+								<p:ajax event="save" listener="#{displayUsersBean.saveChanges}" update="growl"></p:ajax>
 								<p:inputText value="#{displayUsersBean.user.firstName}"
 									required="true" label="text" />
 							</p:inplace>
@@ -45,7 +47,7 @@
 						</b:column>
 						<b:column span="3">
 							<p:inplace id="oLastName" editor="true">
-								<p:ajax event="save" listener="#{displayUsersBean.saveChanges}"></p:ajax>
+								<p:ajax event="save" listener="#{displayUsersBean.saveChanges}" update="growl"></p:ajax>
 								<p:inputText value="#{displayUsersBean.user.lastName}"
 									required="true" label="text" />
 							</p:inplace>
@@ -59,7 +61,7 @@
 						</b:column>
 						<b:column span="3">
 							<p:inplace id="oEmail" editor="true">
-								<p:ajax event="save" listener="#{displayUsersBean.saveChanges}"></p:ajax>
+								<p:ajax event="save" listener="#{displayUsersBean.saveChanges}" update="growl"></p:ajax>
 								<p:inputText value="#{displayUsersBean.user.email}"
 									required="true" label="text" />
 							</p:inplace>
@@ -74,7 +76,7 @@
 						</b:column>
 						<b:column span="3">
 							<p:inplace id="oBirthday" editor="true">
-								<p:ajax event="save" listener="#{displayUsersBean.saveChanges}"></p:ajax>
+								<p:ajax event="save" listener="#{displayUsersBean.saveChanges}" update="growl"></p:ajax>
 								<p:calendar value="#{displayUsersBean.user.birthdate}"
 									pattern="dd/MM/yyyy" mask="true">
 									<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
@@ -203,7 +205,7 @@
 												</f:facet>
 												<b:row>
 													<b:column span="9">
-														<p:outputLabel value="experienceLabel"
+														<p:outputLabel value="Job"
 															for="experienceLabel" />
 													</b:column>
 													<b:column span="1">
@@ -213,11 +215,22 @@
 												</b:row>
 												<b:row>
 													<b:column span="9">
-														<p:outputLabel value="yearSart" for="yearStart" />
+														<p:outputLabel value="Start date" for="yearStart" />
 													</b:column>
 													<b:column span="1">
 														<h:outputText id="yearStart"
 															value="#{experiencesList.yearStart}">
+															<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+														</h:outputText>
+													</b:column>
+												</b:row>
+												<b:row>
+													<b:column span="9">
+														<p:outputLabel value="End date" for="yearEnd" />
+													</b:column>
+													<b:column span="1">
+														<h:outputText id="yearEnd"
+															value="#{experiencesList.yearEnd}">
 															<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 														</h:outputText>
 													</b:column>
@@ -326,7 +339,7 @@
 								<p:autoComplete id="acCompany" forceSelection="true"
 									value="#{insertExperienceBean.company.label}"
 									completeMethod="#{autoCompleteBean.completeTextCompany}" />
-								<h:outputLabel value="Label" for="iLabel" />
+								<h:outputLabel value="Job occupied" for="iLabel" />
 								<p:inputText id="iLabel"
 									value="#{insertExperienceBean.experiences.label}" />
 								<h:outputLabel value="Description" for="iDescription" />
@@ -342,7 +355,7 @@
 									pattern="dd/MM/yyyy" mask="99/99/9999" />
 								<p:commandButton value="Add experience" id="addExperience"
 									actionListener="#{insertExperienceBean.addExperience}"
-									styleClass="ui-priority-primary" update="displayUser" />
+									styleClass="ui-priority-primary" update="displayUser,growl" />
 							</p:panelGrid>
 						</h:form>
 					</div>
@@ -361,7 +374,7 @@
 									maxResults="10" multiple="true" />
 								<p:commandButton value="Add Skill" id="addSkill"
 									action="#{insertKnowBean.addSkill}"
-									styleClass="ui-priority-primary" update="displayUser" />
+									styleClass="ui-priority-primary" update="displayUser,growl" />
 							</p:panelGrid>
 						</h:form>
 					</div>
@@ -379,7 +392,7 @@
 									completeMethod="#{autoCompleteBean.completeTextHobby}"
 									maxResults="10" multiple="true" resetValues="true" />
 								<p:commandButton value="Add Hobby" id="addHobby"
-									update="displayUser, new-hobby"
+									update="displayUser, new-hobby,growl"
 									actionListener="#{insertPracticeBean.addHobby}"
 									resetValues="true" styleClass="ui-priority-primary">
 								</p:commandButton>
@@ -408,7 +421,7 @@
 									pattern="dd/MM/yyyy" mask="99/99/9999" />
 								<p:commandButton value="Add Diploma" id="addDiploma"
 									actionListener="#{insertObtainBean.addDiploma}"
-									update="displayUser" styleClass="ui-priority-primary" />
+									update="displayUser,growl" styleClass="ui-priority-primary" />
 							</p:panelGrid>
 						</h:form>
 					</div>

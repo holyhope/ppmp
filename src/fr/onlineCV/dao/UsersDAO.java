@@ -63,8 +63,6 @@ public class UsersDAO {
 
 		try {
 			user = (User) requete.getSingleResult();
-		} catch (NoResultException e) {
-			return null;
 		} catch (Exception e) {
 			throw new DAOException(e);
 		}
@@ -80,8 +78,7 @@ public class UsersDAO {
 
 		try {
 			users = (List<User>) query.getResultList();
-		} catch (NoResultException e) {
-			return null;
+
 		} catch (Exception e) {
 			throw new DAOException(e);
 		}
@@ -96,9 +93,6 @@ public class UsersDAO {
 		query.setParameter("lastName", lastName);
 		try {
 			user = (User) query.getSingleResult();
-		} catch (NoResultException e) {
-			System.out.println("Returned NULL !");
-			return null;
 		} catch (Exception e) {
 			throw new DAOException(e);
 		}
@@ -124,8 +118,7 @@ public class UsersDAO {
 
 		try {
 			users = (List<User>) query.getResultList();
-		} catch (NoResultException e) {
-			return null;
+
 		} catch (Exception e) {
 			throw new DAOException(e);
 		}

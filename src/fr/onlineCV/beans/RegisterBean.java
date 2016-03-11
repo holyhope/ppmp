@@ -26,11 +26,15 @@ public class RegisterBean implements Serializable {
     }
 
     // Method called when button of register form clicked
-    public void register() {
+    public String register() {
     	user.setHashPassword(PasswordConvert.hashPassword(user.getHashPassword()));
         userDao.create( user );
-        FacesMessage message = new FacesMessage( "Succès de l'inscription !" );
-        FacesContext.getCurrentInstance().addMessage( null, message );
+        
+        FacesMessage message = new FacesMessage( FacesMessage.SEVERITY_INFO, "Succès", "Succès de l'inscription !\nConnectez-vous avec vos nouveaux identifiants" );
+        FacesContext fctx = FacesContext.getCurrentInstance();
+        fctx.getExternalContext().getFlash().setKeepMessages(true);
+        FacesContext.getCurrentInstance().addMessage("growl", message );
+        return "login";
     }
 
     public User getUser() {
