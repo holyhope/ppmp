@@ -17,7 +17,11 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class ExperiencesPK implements Serializable {
 
-    @Basic(optional = false)
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Basic(optional = false)
     @Column(name = "id_users")
     private int idUsers;
     @Basic(optional = false)
