@@ -34,8 +34,8 @@
 						<h:outputText value="#{user.lastName}" />
 					</p:column>
 					<p:column headerText="Show User">
-						<p:commandButton look="primary" action="#{searchBean.showUser}"
-							value="Show Profile">
+						<p:commandButton styleClass="ui-priority-primary"
+							action="#{searchBean.showUser}" value="Show Profile">
 							<f:setPropertyActionListener target="#{searchBean.user.id}"
 								value="#{user.id}" />
 						</p:commandButton>
@@ -64,7 +64,7 @@
 							<h:outputText value="#{user.lastName}" />
 						</p:column>
 						<p:column headerText="Show User">
-							<p:commandButton look="primary" action="#{searchBean.showUser}"
+							<p:commandButton styleClass="ui-priority-primary" action="#{searchBean.showUser}"
 								value="Show Profile">
 								<f:setPropertyActionListener target="#{searchBean.user.id}"
 									value="#{user.id}" />
@@ -95,7 +95,7 @@
 							<h:outputText value="#{user.lastName}" />
 						</p:column>
 						<p:column headerText="Show User">
-							<p:commandButton look="primary" action="#{searchBean.showUser}"
+							<p:commandButton styleClass="ui-priority-primary" action="#{searchBean.showUser}"
 								value="Show Profile">
 								<f:setPropertyActionListener target="#{searchBean.user.id}"
 									value="#{user.id}" />

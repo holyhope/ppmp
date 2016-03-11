@@ -15,29 +15,34 @@ import fr.onlineCV.tools.PasswordConvert;
 @RequestScoped
 public class RegisterBean implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    private User user;
+	private static final long serialVersionUID = 1L;
 
-    @EJB
-    private UsersDAO userDao;
+	private User user;
 
-    public RegisterBean() {
-        user = new User();
-    }
+	@EJB
+	private UsersDAO userDao;
 
-    // Method called when button of register form clicked
-    public String register() {
-    	user.setHashPassword(PasswordConvert.hashPassword(user.getHashPassword()));
-        userDao.create( user );
-        
-        FacesMessage message = new FacesMessage( FacesMessage.SEVERITY_INFO, "Succès", "Succès de l'inscription !\nConnectez-vous avec vos nouveaux identifiants" );
-        FacesContext fctx = FacesContext.getCurrentInstance();
-        fctx.getExternalContext().getFlash().setKeepMessages(true);
-        FacesContext.getCurrentInstance().addMessage("growl", message );
-        return "login";
-    }
+	public RegisterBean() {
+		user = new User();
+	}
 
-    public User getUser() {
-        return user;
-    }
+	// Method called when button of register form clicked
+	public String register() {
+		// Hash the new password
+		user.setHashPassword(PasswordConvert.hashPassword(user.getHashPassword()));
+		// Creating the new user
+		userDao.create(user);
+
+		// Success Message
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Succès",
+				"Succès de l'inscription !\nConnectez-vous avec vos nouveaux identifiants");
+		FacesContext fctx = FacesContext.getCurrentInstance();
+		fctx.getExternalContext().getFlash().setKeepMessages(true);
+		FacesContext.getCurrentInstance().addMessage("growl", message);
+		return "login";
+	}
+
+	public User getUser() {
+		return user;
+	}
 }

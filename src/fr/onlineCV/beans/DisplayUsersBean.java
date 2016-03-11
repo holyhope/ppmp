@@ -16,61 +16,41 @@ import fr.onlineCV.entities.User;
 public class DisplayUsersBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
 	private User user;
+
 	private boolean showDeleteButtonSkill = false;
 	private boolean showDeleteButtonHobby = false;
 	private boolean showDeleteButtonExperiences = false;
 	private boolean showDeleteButtonDiploma = false;
-	
+
 	@EJB
 	private UsersDAO userDao;
-	
-	public void onPageLoad(){
+
+	public void onPageLoad() {
 		user = (User) SessionBean.getSession().getAttribute(LoginBean.USER);
-		if(user != null){
-		user = userDao.find(user.getEmail());
+		if (user != null) {
+			user = userDao.find(user.getEmail());
 		}
 	}
-	
-	public void modifySkill(){
-		if(showDeleteButtonSkill==true){
-			showDeleteButtonSkill=false ;
-		}
-		else{
-			showDeleteButtonSkill = true;
-		}
-		
+
+	public void modifySkill() {
+		showDeleteButtonSkill = !showDeleteButtonSkill;
 	}
-	public void modifyHobby(){
-		if(showDeleteButtonHobby==true){
-			showDeleteButtonHobby=false ;
-		}
-		else{
-			showDeleteButtonHobby = true;
-		}
-		
+
+	public void modifyHobby() {
+		showDeleteButtonHobby = !showDeleteButtonHobby;
 	}
-	public void modifyExperiences(){
-		if(showDeleteButtonExperiences==true){
-			showDeleteButtonExperiences=false ;
-		}
-		else{
-			showDeleteButtonExperiences = true;
-		}
-		
+
+	public void modifyExperiences() {
+		showDeleteButtonExperiences = !showDeleteButtonExperiences;
 	}
-	public void modifyDiploma(){
-		if(showDeleteButtonDiploma==true){
-			showDeleteButtonDiploma=false ;
-		}
-		else{
-			showDeleteButtonDiploma = true;
-		}
-		
+
+	public void modifyDiploma() {
+		showDeleteButtonDiploma = !showDeleteButtonDiploma;
 	}
-	
-	
-	public void saveChanges(){
+
+	public void saveChanges() {
 		userDao.update(user);
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effectuée",
 				"Information modifiée");
@@ -117,5 +97,4 @@ public class DisplayUsersBean implements Serializable {
 		this.showDeleteButtonDiploma = showDeleteButtonDiploma;
 	}
 
-	
 }

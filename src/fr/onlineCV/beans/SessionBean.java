@@ -30,18 +30,5 @@ public class SessionBean {
 		return (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 	}
 
-	/**
-	 * Check if the current visitor is connected.
-	 * 
-	 * @return True if the visitor is connected.
-	 */
-	public static boolean isConnected() {
-		try {
-
-			Objects.requireNonNull(getSession().getAttribute(LoginBean.USER));
-			return true;
-		} catch (NullPointerException e) {
-			return false;
-		}
-	}
+	
 }

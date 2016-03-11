@@ -23,7 +23,6 @@ public class UsersDAO {
 	@PersistenceContext(unitName = "bdd_OnlineCV_PU")
 	private EntityManager em;
 
-	// Saving new user
 	public void create(User user) throws DAOException {
 
 		try {
@@ -124,36 +123,36 @@ public class UsersDAO {
 		}
 
 		return users;
-		
+
 	}
-	
-	public List<User> findBySkill(String skillLabel){
+
+	public List<User> findBySkill(String skillLabel) {
 		List<User> users = new ArrayList<>();
-		
+
 		TypedQuery<User> query = em.createNamedQuery("User.findBySkill", User.class);
-		
-		query.setParameter("skillLabel", skillLabel );
-		
-		try{
-			
+
+		query.setParameter("skillLabel", skillLabel);
+
+		try {
+
 			users = (List<User>) query.getResultList();
-		}catch(Exception e){
+		} catch (Exception e) {
 			throw new DAOException(e);
 		}
 		return users;
 	}
-	
-	public List<User> findByHobby(String hobbyLabel){
+
+	public List<User> findByHobby(String hobbyLabel) {
 		List<User> users = new ArrayList<>();
-		
+
 		TypedQuery<User> query = em.createNamedQuery("User.findByHobby", User.class);
-		
-		query.setParameter("hobbyLabel", hobbyLabel );
-		
-		try{
-			
+
+		query.setParameter("hobbyLabel", hobbyLabel);
+
+		try {
+
 			users = (List<User>) query.getResultList();
-		}catch(Exception e){
+		} catch (Exception e) {
 			throw new DAOException(e);
 		}
 		return users;

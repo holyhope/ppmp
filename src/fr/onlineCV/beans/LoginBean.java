@@ -18,6 +18,7 @@ import fr.onlineCV.tools.PasswordConvert;
 public class LoginBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
 	public static final String USER = "user";
 	private User user;
 	private boolean isConnected = false;
@@ -29,38 +30,44 @@ public class LoginBean implements Serializable {
 		user = new User();
 	}
 
-	// Method called when button of register form clicked
+	// Method called when button login is clicked
 	public String login() {
 		User userEmail = userDao.find(user.getEmail());
 
+		// Check if both hash password are equals
 		if (userEmail.getHashPassword().equals(PasswordConvert.hashPassword(user.getHashPassword()))) {
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Connexion", "Vous êtes maintentant connecté(e)");
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Connexion",
+					"Vous êtes maintentant connecté(e)");
 			FacesContext fctx = FacesContext.getCurrentInstance();
-	        fctx.getExternalContext().getFlash().setKeepMessages(true);
+			fctx.getExternalContext().getFlash().setKeepMessages(true);
 			FacesContext.getCurrentInstance().addMessage("growl", message);
+			// Creating session for user connected
 			SessionBean.createSession().setAttribute(USER, userEmail);
 			user = userEmail;
 			isConnected = true;
 			return "myProfile?faces-redirect=true";
 		} else {
-			FacesMessage message = new FacesMessage("Wrong password !");
-			FacesContext.getCurrentInstance().addMessage(null, message);
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+					"Wrong user or Wrong password !");
+			FacesContext fctx = FacesContext.getCurrentInstance();
+			fctx.getExternalContext().getFlash().setKeepMessages(true);
+			FacesContext.getCurrentInstance().addMessage("growl", message);
 			return "login";
 		}
 	}
-	
-	//logout event, invalidate session
-    public String logout() {
-        HttpSession session = SessionBean.getSession();
-        session.invalidate();
-        return "login?faces-redirect=true";
-    }
-    
+
+	// Logout event, invalidate session
+	public String logout() {
+		HttpSession session = SessionBean.getSession();
+		session.invalidate();
+		return "login?faces-redirect=true";
+	}
+
 	public User getUser() {
 		return user;
 	}
-	
-	public boolean getIsConnected(){
+
+	public boolean getIsConnected() {
 		return isConnected;
 	}
 }

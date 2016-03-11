@@ -18,9 +18,9 @@
 	<ui:define name="content">
 
 		<b:container>
-			<br/>
-			<h:outputStylesheet library="css" name="style.css"  />
-			<p:growl id="growl" showDetail="true" sticky="false" life="6000" /> 
+			<br />
+			<h:outputStylesheet library="css" name="style.css" />
+			<p:growl id="growl" showDetail="true" sticky="false" life="6000" />
 			<b:panel look="primary" id="displayUser" collapsible="false">
 				<f:facet name="heading">
 					<h:outputText value="Your profile" />
@@ -33,7 +33,8 @@
 						<b:column span="3">
 
 							<p:inplace id="oFirstName" editor="true">
-								<p:ajax event="save" listener="#{displayUsersBean.saveChanges}" update="growl"></p:ajax>
+								<p:ajax event="save" listener="#{displayUsersBean.saveChanges}"
+									update="growl"></p:ajax>
 								<p:inputText value="#{displayUsersBean.user.firstName}"
 									required="true" label="text" />
 							</p:inplace>
@@ -47,7 +48,8 @@
 						</b:column>
 						<b:column span="3">
 							<p:inplace id="oLastName" editor="true">
-								<p:ajax event="save" listener="#{displayUsersBean.saveChanges}" update="growl"></p:ajax>
+								<p:ajax event="save" listener="#{displayUsersBean.saveChanges}"
+									update="growl"></p:ajax>
 								<p:inputText value="#{displayUsersBean.user.lastName}"
 									required="true" label="text" />
 							</p:inplace>
@@ -61,7 +63,8 @@
 						</b:column>
 						<b:column span="3">
 							<p:inplace id="oEmail" editor="true">
-								<p:ajax event="save" listener="#{displayUsersBean.saveChanges}" update="growl"></p:ajax>
+								<p:ajax event="save" listener="#{displayUsersBean.saveChanges}"
+									update="growl"></p:ajax>
 								<p:inputText value="#{displayUsersBean.user.email}"
 									required="true" label="text" />
 							</p:inplace>
@@ -76,7 +79,8 @@
 						</b:column>
 						<b:column span="3">
 							<p:inplace id="oBirthday" editor="true">
-								<p:ajax event="save" listener="#{displayUsersBean.saveChanges}" update="growl"></p:ajax>
+								<p:ajax event="save" listener="#{displayUsersBean.saveChanges}"
+									update="growl"></p:ajax>
 								<p:calendar value="#{displayUsersBean.user.birthdate}"
 									pattern="dd/MM/yyyy" mask="true">
 									<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
@@ -205,8 +209,7 @@
 												</f:facet>
 												<b:row>
 													<b:column span="9">
-														<p:outputLabel value="Job"
-															for="experienceLabel" />
+														<p:outputLabel value="Job" for="experienceLabel" />
 													</b:column>
 													<b:column span="1">
 														<h:outputText id="experienceLabel"

@@ -21,11 +21,16 @@ import fr.onlineCV.entities.User;
 public class SearchBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
 	private User user;
+
 	private String searchRequest;
+
 	private List<User> users;
+
 	private HashMap<Skill, List<User>> searchSkillResult;
 	private HashMap<Hobby, List<User>> searchHobbyResult;
+
 	private boolean isMyProfile = false;
 
 	@EJB
@@ -43,50 +48,53 @@ public class SearchBean implements Serializable {
 	}
 
 	public List<User> searchByFirstName() {
-
 		return userDao.findByFirstNameLike(searchRequest);
-
 	}
 
 	public String search() {
 		searchBySkill();
 		searchByHobby();
 		users = searchByFirstName();
+		// Concatenate results of both firstName and lastName list
 		users.addAll(searchByLastName());
 		return "search";
 	}
 
 	public void searchBySkill() {
 		searchSkillResult.clear();
-		List<Skill> skillList = new ArrayList<>(); 
+		List<Skill> skillList = new ArrayList<>();
 		skillList = skillDao.findByLabelLike(searchRequest);
 		skillList.forEach(x -> searchSkillResult.put(x, userDao.findBySkill(x.getLabel())));
+		// Remove null result of the list
 		searchSkillResult.values().removeIf(x -> x == null || x.size() == 0);
-		
+
 	}
-	
+
 	public void searchByHobby() {
 		searchHobbyResult.clear();
-		List<Hobby> hobbyList = new ArrayList<>(); 
+		List<Hobby> hobbyList = new ArrayList<>();
 		hobbyList = hobbyDao.findByLabelLike(searchRequest);
 		hobbyList.forEach(x -> searchHobbyResult.put(x, userDao.findByHobby(x.getLabel())));
+		// Remove null result of the list
 		searchHobbyResult.values().removeIf(x -> x == null || x.size() == 0);
 	}
 
 	public List<User> searchByLastName() {
 		return userDao.findByLastNameLike(searchRequest);
-
 	}
-	
-	public List<User> searchBySkillLabel(){
+
+	public List<User> searchBySkillLabel() {
 		return userDao.findBySkill(searchRequest);
 	}
 
 	public String showUser() {
 		user = userDao.findById(user.getId());
 		User userSession = (User) SessionBean.getSession().getAttribute(LoginBean.USER);
+		// Check if user is connected
 		if (userSession == null) {
 			isMyProfile = false;
+
+			// Check if it's his profile
 		} else {
 			userSession = userDao.find(userSession.getEmail());
 			isMyProfile = userSession.getId() == user.getId();

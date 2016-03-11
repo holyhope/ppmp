@@ -14,52 +14,50 @@ import fr.onlineCV.entities.Diploma;
 public class DiplomaDAO {
 
 	// Injecting manager that handle connection with DB
-			@PersistenceContext(unitName = "bdd_OnlineCV_PU")
-			private EntityManager em;
-			
-			
-			// Saving new user
-				public void create(Diploma diploma) throws DAOException {
+	@PersistenceContext(unitName = "bdd_OnlineCV_PU")
+	private EntityManager em;
 
-					try {
-						em.persist(diploma);
-					} catch (Exception e) {
-						throw new DAOException(e);
-					}
-				}
-			
-			public List<Diploma> selectAll() throws DAOException {
-				TypedQuery<Diploma> query = em.createNamedQuery("Diploma.findAll", Diploma.class);
-				List<Diploma> diplomas = new ArrayList<>();
-				try {
-					diplomas = query.getResultList();
-				} catch (Exception e) {
-					throw new DAOException(e);
-				}
-				return diplomas;
-			}
-			
-			public Diploma findByLabel(String label){
-				TypedQuery<Diploma> query = em.createNamedQuery("Diploma.findByLabel", Diploma.class);
-				query.setParameter("label", label);
-				Diploma diploma;
-				try {
-					diploma = query.getSingleResult();
-				} catch (Exception e) {
-					throw new DAOException(e);
-				}
-				return diploma;
-			}
-			
-			public List<Diploma> findByLabelLike(String label) {
-				TypedQuery<Diploma> query = em.createNamedQuery("Diploma.findByLabelLike", Diploma.class);
-				query.setParameter("label", label + "%");
-				List<Diploma> diplomas = new ArrayList<>();
-				try {
-					diplomas = query.getResultList();
-				} catch (Exception e) {
-					throw new DAOException(e);
-				}
-				return diplomas;
-			}
+	public void create(Diploma diploma) throws DAOException {
+
+		try {
+			em.persist(diploma);
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
 	}
+
+	public List<Diploma> selectAll() throws DAOException {
+		TypedQuery<Diploma> query = em.createNamedQuery("Diploma.findAll", Diploma.class);
+		List<Diploma> diplomas = new ArrayList<>();
+		try {
+			diplomas = query.getResultList();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
+		return diplomas;
+	}
+
+	public Diploma findByLabel(String label) {
+		TypedQuery<Diploma> query = em.createNamedQuery("Diploma.findByLabel", Diploma.class);
+		query.setParameter("label", label);
+		Diploma diploma;
+		try {
+			diploma = query.getSingleResult();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
+		return diploma;
+	}
+
+	public List<Diploma> findByLabelLike(String label) {
+		TypedQuery<Diploma> query = em.createNamedQuery("Diploma.findByLabelLike", Diploma.class);
+		query.setParameter("label", label + "%");
+		List<Diploma> diplomas = new ArrayList<>();
+		try {
+			diplomas = query.getResultList();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
+		return diplomas;
+	}
+}

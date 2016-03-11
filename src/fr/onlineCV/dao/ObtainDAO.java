@@ -12,7 +12,6 @@ public class ObtainDAO {
 	// Injecting manager that handle connection with DB
 	@PersistenceContext(unitName = "bdd_OnlineCV_PU")
 	private EntityManager em;
-	
 
 	public void create(Obtain obtain) throws DAOException {
 
@@ -25,10 +24,10 @@ public class ObtainDAO {
 
 	public void delete(Obtain obtain) {
 		try {
-			Obtain ref = em.find(Obtain.class, obtain.getObtainPK());    
-	        
+			Obtain ref = em.find(Obtain.class, obtain.getObtainPK());
+
 			em.remove(ref);
-			
+
 		} catch (Exception e) {
 			throw new DAOException(e);
 		}

@@ -22,61 +22,81 @@ public class InsertPracticeBean {
 	private User user;
 	private Hobby hobby;
 	private List<String> hobbyListLabel;
-	
+
 	@EJB
 	UsersDAO usersDao;
 	@EJB
 	HobbyDAO hobbyDao;
-	
+
 	public InsertPracticeBean() {
 		user = new User();
 		hobby = new Hobby();
 		hobbyListLabel = new ArrayList<>();
 	}
-	
-	public void addHobby() throws IOException{
+
+	public void addHobby() throws IOException {
 		final List<Hobby> hobbyList;
+
+		// Getting user session to find the information of the current user
 		user = (User) SessionBean.getSession().getAttribute(LoginBean.USER);
 		user = usersDao.find(user.getEmail());
+
+		// Getting hobby List
 		hobbyList = user.getHobbyList();
+
+		// Check if all hobbies are new
 		for (Hobby hobby : hobbyList) {
 			if (hobbyListLabel.contains(hobby.getLabel())) {
-				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur lors de l'ajout des hobbies",
-						"Vous avez déjà certains hobbies");
+				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+						"Erreur lors de l'ajout des hobbies", "Vous avez déjà certains hobbies");
 				FacesContext.getCurrentInstance().addMessage("growl", message);
 				return;
 			}
 		}
+
+		// Add all new hobbies
 		hobbyListLabel.stream().forEach(x -> hobbyList.add(hobbyDao.findByLabel(x)));
 		user.setHobbyList(hobbyList);
+		// Merging ...
 		usersDao.update(user);
+
+		// Update all data of the current user
 		FacesContext fctx = FacesContext.getCurrentInstance();
-		DisplayUsersBean displayUsersBean = fctx.getApplication().evaluateExpressionGet(fctx , "#{displayUsersBean}", DisplayUsersBean.class);
+		DisplayUsersBean displayUsersBean = fctx.getApplication().evaluateExpressionGet(fctx, "#{displayUsersBean}",
+				DisplayUsersBean.class);
 		displayUsersBean.onPageLoad();
+
 		String descriptionMessage = null;
-		if(hobbyListLabel.size() > 1){
+		if (hobbyListLabel.size() > 1) {
 			descriptionMessage = "Vos hobbies ont bien été ajoutés";
-		}
-		else{
+		} else {
 			descriptionMessage = "Votre hobby a bien été ajouté";
 		}
-		FacesMessage message = new FacesMessage( FacesMessage.SEVERITY_INFO, "Succès : Ajout Hobby", descriptionMessage );
-        FacesContext.getCurrentInstance().addMessage("growl", message );
+
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Succès : Ajout Hobby", descriptionMessage);
+		FacesContext.getCurrentInstance().addMessage("growl", message);
 	}
-	public void deleteHobby() throws IOException{
+
+	public void deleteHobby() throws IOException {
+		// Getting user session to find the information of the current user
 		user = (User) SessionBean.getSession().getAttribute(LoginBean.USER);
 		user = usersDao.find(user.getEmail());
+
+		// Getting hobby List
 		final List<Hobby> hobbyList = user.getHobbyList();
-		hobbyList.removeIf(x-> x.getLabel().equals(hobby.getLabel()));
+
+		// Remove hobby that is equals to label name
+		hobbyList.removeIf(x -> x.getLabel().equals(hobby.getLabel()));
 		user.setHobbyList(hobbyList);
+		// Merging ...
 		usersDao.update(user);
+
+		// Update all data
 		FacesContext fctx = FacesContext.getCurrentInstance();
-		DisplayUsersBean displayUsersBean = fctx.getApplication().evaluateExpressionGet(fctx , "#{displayUsersBean}", DisplayUsersBean.class);
+		DisplayUsersBean displayUsersBean = fctx.getApplication().evaluateExpressionGet(fctx, "#{displayUsersBean}",
+				DisplayUsersBean.class);
 		displayUsersBean.onPageLoad();
-		//ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-	    //ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
 	}
-	
 
 	public User getUser() {
 		return user;

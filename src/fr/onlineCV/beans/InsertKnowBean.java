@@ -36,50 +36,66 @@ public class InsertKnowBean {
 
 	public void addSkill() throws IOException {
 		final List<Skill> skillList;
+
+		// Getting user session to find the information of the current user
 		user = (User) SessionBean.getSession().getAttribute(LoginBean.USER);
 		user = usersDao.find(user.getEmail());
+		
+		//Getting skill List
 		skillList = user.getSkillList();
+		
+		//Check if all skills are new
 		for (Skill skill : skillList) {
 			if (skillListLabel.contains(skill.getLabel())) {
-				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur lors de l'ajout des compétences",
-						"Vous avez déjà certaines compétences");
+				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+						"Erreur lors de l'ajout des compétences", "Vous avez déjà certaines compétences");
 				FacesContext.getCurrentInstance().addMessage("growl", message);
 				return;
 			}
 		}
+		//Getting the skill by label name and put it in the skill List
 		skillListLabel.stream().forEach(x -> skillList.add(skillDao.findByLabel(x)));
 		user.setSkillList(skillList);
+		//Merging ...
 		usersDao.update(user);
 
+		//Updating all data of the current user
 		FacesContext fctx = FacesContext.getCurrentInstance();
 		DisplayUsersBean displayUsersBean = fctx.getApplication().evaluateExpressionGet(fctx, "#{displayUsersBean}",
 				DisplayUsersBean.class);
 		displayUsersBean.onPageLoad();
+		
 		String descriptionMessage = null;
-		if(skillListLabel.size() > 1){
+		
+		if (skillListLabel.size() > 1) {
 			descriptionMessage = "Vos compétences ont bien été ajoutées";
-		}
-		else{
+		} else {
 			descriptionMessage = "Votre compétence a bien été ajoutée";
 		}
+		
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Succès ajout des compétences",
 				descriptionMessage);
 		FacesContext.getCurrentInstance().addMessage("growl", message);
 	}
 
 	public void deleteSkill() throws IOException {
+		//Getting user session to find the information of the current user
 		user = (User) SessionBean.getSession().getAttribute(LoginBean.USER);
 		user = usersDao.find(user.getEmail());
-		final List<Skill> skillList = usersDao.find(user.getEmail()).getSkillList();
+		
+		//Getting skill List
+		final List<Skill> skillList = user.getSkillList();
+		// Remove skill that is equals to the label to remove
 		skillList.removeIf(x -> x.getLabel().equals(skill.getLabel()));
 		user.setSkillList(skillList);
+		//Merging ...
 		usersDao.update(user);
+		
+		//Updating all data of the current user
 		FacesContext fctx = FacesContext.getCurrentInstance();
 		DisplayUsersBean displayUsersBean = fctx.getApplication().evaluateExpressionGet(fctx, "#{displayUsersBean}",
 				DisplayUsersBean.class);
 		displayUsersBean.onPageLoad();
-		// user.getSkillList().removeIf(x->
-		// x.getLabel().equals(skill.getLabel()));
 	}
 
 	public User getUser() {

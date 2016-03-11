@@ -16,18 +16,16 @@ public class CompanyDAO {
 	// Injecting manager that handle connection with DB
 	@PersistenceContext(unitName = "bdd_OnlineCV_PU")
 	private EntityManager em;
-	
-	
-	// Saving new user
-		public void create(Company company) throws DAOException {
 
-			try {
-				em.persist(company);
-			} catch (Exception e) {
-				throw new DAOException(e);
-			}
+	public void create(Company company) throws DAOException {
+
+		try {
+			em.persist(company);
+		} catch (Exception e) {
+			throw new DAOException(e);
 		}
-	
+	}
+
 	public List<Company> selectAll() throws DAOException {
 		TypedQuery<Company> query = em.createNamedQuery("Company.findAll", Company.class);
 		List<Company> companies = new ArrayList<>();
@@ -38,8 +36,8 @@ public class CompanyDAO {
 		}
 		return companies;
 	}
-	
-	public Company findByLabel(String label){
+
+	public Company findByLabel(String label) {
 		TypedQuery<Company> query = em.createNamedQuery("Company.findByLabel", Company.class);
 		query.setParameter("label", label);
 		Company company;
@@ -50,7 +48,7 @@ public class CompanyDAO {
 		}
 		return company;
 	}
-	
+
 	public List<Company> findByLabelLike(String label) {
 		TypedQuery<Company> query = em.createNamedQuery("Company.findByLabelLike", Company.class);
 		query.setParameter("label", label + "%");
