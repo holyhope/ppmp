@@ -14,8 +14,8 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<h:form prependId="false">
-			<b:container layout="fluid">
+		<h:form prependId="false" rendered="#{not loginBean.isConnected}">
+			<b:container layout="fluid" >
 				<h2 class="form-signin-heading">Please sign up</h2>
 				<b:row>
 					<b:column span="9">
@@ -104,6 +104,12 @@
 				</b:row>
 			</b:container>
 		</h:form>
+		<b:panel look="danger" rendered="#{loginBean.isConnected}" collapsible="false">
+		<f:facet name="heading">
+					<h:outputText value="You are already registered as #{loginBean.user.firstName} #{loginBean.user.lastName}" />
+				</f:facet>
+		
+		</b:panel>
 	</ui:define>
 
 </ui:composition>
