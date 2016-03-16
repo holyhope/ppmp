@@ -60,6 +60,11 @@ public class LoginBean implements Serializable {
 	public String logout() {
 		HttpSession session = SessionBean.getSession();
 		session.invalidate();
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Déconnexion",
+				"Vous êtes maintenant déconnecté");
+		FacesContext fctx = FacesContext.getCurrentInstance();
+		fctx.getExternalContext().getFlash().setKeepMessages(true);
+		FacesContext.getCurrentInstance().addMessage("growl", message);
 		return "login?faces-redirect=true";
 	}
 
