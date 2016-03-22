@@ -98,16 +98,29 @@ public class InsertExperienceBean implements Serializable {
 
 	}
 
-	public void deleteExperience() throws IOException {
+	public void deleteExperience(int idCompany) throws IOException {
 		// Find informations of the user
 		user = (User) SessionBean.getSession().getAttribute(LoginBean.USER);
 		user = usersDao.find(user.getEmail());
+		company = companyDao.findById(idCompany);
 
 		// Getting experience List
 		List<Experiences> experiencesList = user.getExperiencesList();
-		// Remove experience that is equals to the label to remove
-		experiencesList.removeIf(x -> x.getLabel().equals(experiences.getLabel()));
 
+		// Getting experience to remove
+		experiencesList.forEach(experience -> {
+			if (experience.getCompany().getId().equals(company.getId())
+					&& experience.getUsers().getId().equals(user.getId())) {
+				this.experiences = experiencesList.get(experiencesList.indexOf(experience));
+			}
+		});
+
+		// Remove experience
+		if (experiences != null) {
+			experiencesList.remove(this.experiences);
+			experiencesDao.delete(experiences);
+		}
+		// Remove experience that is equals to the label to remove
 		user.setExperiencesList(experiencesList);
 		// Merging ...
 		usersDao.update(user);

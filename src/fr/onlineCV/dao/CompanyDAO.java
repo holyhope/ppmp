@@ -26,6 +26,7 @@ public class CompanyDAO {
 		}
 	}
 
+	
 	public List<Company> selectAll() throws DAOException {
 		TypedQuery<Company> query = em.createNamedQuery("Company.findAll", Company.class);
 		List<Company> companies = new ArrayList<>();
@@ -37,6 +38,17 @@ public class CompanyDAO {
 		return companies;
 	}
 
+	public Company findById(int id){
+		TypedQuery<Company> query = em.createNamedQuery("Company.findById", Company.class);
+		query.setParameter("id", id);
+		Company company;
+		try {
+			company = query.getSingleResult();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
+		return company;
+	}
 	public Company findByLabel(String label) {
 		TypedQuery<Company> query = em.createNamedQuery("Company.findByLabel", Company.class);
 		query.setParameter("label", label);

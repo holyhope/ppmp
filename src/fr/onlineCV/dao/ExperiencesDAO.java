@@ -21,4 +21,13 @@ public class ExperiencesDAO {
 			throw new DAOException(e);
 		}
 	}
+	
+	public void delete(Experiences experience) {
+		try {
+			Experiences ref = em.find(Experiences.class, experience.getExperiencesPK());
+			em.remove(ref);
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
+	}
 }

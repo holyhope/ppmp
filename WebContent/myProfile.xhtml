@@ -245,11 +245,9 @@
 											<b:commandButton
 												rendered="#{displayUsersBean.showDeleteButtonExperiences}"
 												value="Remove" look="danger" size="sm"
-												action="#{insertExperienceBean.deleteExperience}"
+												action="#{insertExperienceBean.deleteExperience(experiencesList.company.id)}"
 												update="experiences-form">
-												<f:setPropertyActionListener
-													target="#{insertExperienceBean.experiences.label}"
-													value="#{experiencesList.label}" />
+												
 											</b:commandButton>
 										</b:column>
 									</b:row>
